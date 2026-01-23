@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portafolio personal – Daniel Alejandro Reyes Herrera
 
-## Getting Started
+Base de marca personal en Next.js 14 (App Router) + TypeScript + Tailwind. Inspirado en una landing editorial limpia, con secciones apiladas y CTA a contacto.
 
-First, run the development server:
+## Requisitos
+- Node.js 18+ (recomendado LTS)
+- npm
 
+## Scripts
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build
+npm start       # sirve el build
+npm run lint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Estructura principal
+- `src/content/profile.ts`: **Único archivo de contenido**. Edita aquí nombre, textos, experiencia, habilidades, herramientas, idiomas, CTAs y enlaces. LinkedIn/GitHub están como `#` para que los reemplaces.
+- `src/app/page.tsx`: Inicio / landing con hero, servicios, impacto, experiencia, habilidades, herramientas, idiomas y CTA final.
+- `src/app/sobre-mi/page.tsx`: Narrativa, formación y valores.
+- `src/app/contacto/page.tsx`: Datos de contacto y formulario (abre mailto).
+- `src/app/cv/page.tsx`: Vista básica de CV y botón de descarga (usa `/public/cv.pdf` si lo agregas).
+- `src/components/*`: Componentes UI (Container, Button, Card, Badge, TimelineItem, Navbar, Footer).
+- `public/profile.jpg`: Placeholder de imagen (1x1). Reemplázalo por tu foto.
+- `public/og-image.png`: Placeholder para OpenGraph. Reemplázalo si tienes uno propio.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Cómo personalizar
+1) Edita `src/content/profile.ts` para:
+   - Datos personales, hero, chips y CTA.
+   - Servicios (“Lo que hago”), experiencia, formación, habilidades, herramientas, idiomas, FAQ.
+   - Enlaces (email, teléfono, redes).
+2) Reemplaza `/public/profile.jpg` por tu foto real (mismo nombre o ajusta `heroImage` en `profile.ts`).
+3) Si quieres ofrecer descarga de CV, coloca tu PDF en `/public/cv.pdf`.
+4) Paleta y bordes usan CSS vars en `src/app/globals.css` (`--accent`, `--background`, etc.).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Notas de privacidad
+- No se publica dirección exacta (solo “Durango, Dgo.”).
+- Textos en español neutro, tono profesional y directo.
 
-## Learn More
+## Accesibilidad
+- Enlaces y botones con estados de foco visibles.
+- Inputs con labels, `aria` en mailto a través de formulario.
 
-To learn more about Next.js, take a look at the following resources:
+## Despliegue en Vercel
+1) `npm run build` para asegurar que compile.
+2) Deploy con `vercel` apuntando a este repo (framework: Next.js, output: `.next`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Licencia de assets
+- No se usan imágenes con copyright. `profile.jpg` y `og-image.png` son placeholders.
