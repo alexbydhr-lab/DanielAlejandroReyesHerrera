@@ -4,6 +4,8 @@ import './globals.css';
 import { profile } from '@/content/profile';
 import { Navbar } from '@/components/navbar';
 import { Footer } from '@/components/footer';
+import { PageShell } from '@/components/page-shell';
+import { MotionSystem } from '@/components/motion-system';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -28,8 +30,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="es">
       <body className={`${inter.variable} antialiased`}>
+        <MotionSystem />
         <Navbar />
-        {children}
+        <PageShell>{children}</PageShell>
         <Footer />
       </body>
     </html>

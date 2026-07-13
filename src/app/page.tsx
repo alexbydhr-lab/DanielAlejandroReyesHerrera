@@ -3,11 +3,11 @@ import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { SectionTitle } from '@/components/ui/section-title';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 import { TimelineItem } from '@/components/timeline-item';
 import { Hero } from '@/components/hero';
+import { AccountingTerminal } from '@/components/accounting-terminal';
+import { SkillsMarquee } from '@/components/skills-marquee';
 import {
-  profile,
   services,
   experience,
   skills,
@@ -78,16 +78,19 @@ export default function Home() {
       <Hero />
 
       <Container id="lo-que-hago" className="space-y-10">
-        <SectionTitle
-          eyebrow="Lo que hago"
-          title="Apoyo contable y operativo con orden y claridad"
-          subtitle="Combino registro contable, análisis financiero y gestión operativa para mantener la información clara y accionable."
-        />
+        <div className="services-intro">
+          <SectionTitle
+            eyebrow="Lo que hago"
+            title="Apoyo contable y operativo con orden y claridad"
+            subtitle="Combino registro contable, análisis financiero y gestión operativa para mantener la información clara y accionable."
+          />
+          <AccountingTerminal />
+        </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {services.map((service) => (
             <Card
               key={service.title}
-              className="group flex flex-col gap-3 transition-colors hover:!bg-[#0b2f70] hover:!text-white"
+              className="group flex flex-col gap-3"
               interactive
             >
               <div className="text-[--accent] transition-colors group-hover:text-white">{iconMap[service.icon]}</div>
@@ -110,7 +113,7 @@ export default function Home() {
           {impactAreas.map((area) => (
             <Card
               key={area.title}
-              className="group space-y-2 transition-colors hover:!bg-[#0b2f70] hover:!text-white"
+              className="group space-y-2"
               interactive
             >
               <div className="flex items-center gap-3 text-lg">
@@ -127,7 +130,7 @@ export default function Home() {
 
       <Container id="experiencia" className="space-y-8">
         <SectionTitle eyebrow="Experiencia" title="Trayectoria" subtitle="Roles en operación, liderazgo y soporte contable." />
-        <div className="rounded-[28px] bg-white p-6 shadow-lg border border-black/5 space-y-6">
+        <div className="portfolio-panel rounded-[28px] p-6 space-y-6">
           {experience.map((exp, idx) => (
             <TimelineItem
               key={exp.role + exp.company}
@@ -150,17 +153,7 @@ export default function Home() {
 
       <Container id="habilidades" className="space-y-10">
         <SectionTitle eyebrow="Habilidades" title="Fortalezas" subtitle="Habilidades blandas y técnicas." />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((skill) => (
-            <div
-              key={skill}
-              className="group flex items-center gap-3 rounded-full border border-black/10 bg-white/90 px-4 py-2 text-sm font-semibold text-[--foreground] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0b2f70]/40 hover:bg-[#0b2f70] hover:text-white"
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-[#0a5dff] transition-colors group-hover:bg-white" aria-hidden />
-              <span>{skill}</span>
-            </div>
-          ))}
-        </div>
+        <SkillsMarquee skills={skills} />
       </Container>
 
       <Container id="herramientas" className="space-y-10">
@@ -197,7 +190,7 @@ export default function Home() {
       </Container>
 
       <Container className="space-y-6">
-        <div className="rounded-[28px] bg-[#0b2f70] p-8 text-white shadow-lg">
+        <div className="portfolio-panel relative overflow-hidden rounded-[28px] p-8 text-white shadow-lg">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Contacto</p>
@@ -206,15 +199,14 @@ export default function Home() {
             </div>
             <Button
               href={ctaFinal.href}
-              variant="secondary"
-              className="bg-white !text-[#0b2f70] hover:bg-[#0a5dff] hover:!text-white"
+              variant="primary"
             >
               {ctaFinal.button}
             </Button>
           </div>
         </div>
 
-        <div className="rounded-[24px] bg-white p-6 shadow-sm border border-black/5 space-y-4">
+        <div className="portfolio-panel rounded-[24px] p-6 space-y-4">
           <SectionTitle
             eyebrow="Formación"
             title={education.school}
@@ -229,7 +221,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="rounded-[24px] bg-white p-6 shadow-sm border border-black/5 space-y-4">
+        <div className="portfolio-panel rounded-[24px] p-6 space-y-4">
           <SectionTitle
             eyebrow="Cursos y certificaciones"
             title={certifications[0]?.school}

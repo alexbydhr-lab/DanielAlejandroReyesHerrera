@@ -36,7 +36,7 @@ export default function ContactForm() {
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-[--foreground] focus:outline-none focus:ring-2 focus:ring-[--accent]"
+          className="mt-1 w-full rounded-lg border px-3 py-2 text-sm text-[--foreground] focus:outline-none"
           placeholder="Tu nombre"
         />
       </div>
@@ -50,7 +50,7 @@ export default function ContactForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mt-1 w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-[--foreground] focus:outline-none focus:ring-2 focus:ring-[--accent]"
+          className="mt-1 w-full rounded-lg border px-3 py-2 text-sm text-[--foreground] focus:outline-none"
           placeholder="tu@email.com"
         />
       </div>
@@ -64,7 +64,7 @@ export default function ContactForm() {
           onChange={(e) => setMessage(e.target.value)}
           required
           rows={4}
-          className="mt-1 w-full rounded-lg border border-black/10 bg-white px-3 py-2 text-sm text-[--foreground] focus:outline-none focus:ring-2 focus:ring-[--accent]"
+          className="mt-1 w-full rounded-lg border px-3 py-2 text-sm text-[--foreground] focus:outline-none"
           placeholder="Cuéntame brevemente qué necesitas…"
         />
       </div>
