@@ -54,6 +54,33 @@ const projectStages = [
   },
 ];
 
+const portfolioStages = [
+  {
+    shortTitle: 'Identidad profesional',
+    title: 'Una portada con narrativa visual propia',
+    description:
+      'El portafolio presenta mi perfil contable y operativo mediante una dirección visual azul, una jerarquía tipográfica clara y una portada diseñada para comunicar orden, precisión y personalidad desde el primer contacto.',
+    image: '/portfolio-home.png',
+    imageAlt: 'Portada del portafolio profesional de Daniel Reyes',
+  },
+  {
+    shortTitle: 'Historia y proyectos',
+    title: 'Contenido profesional convertido en experiencia',
+    description:
+      'La sección Sobre mí combina información personal, formación y proyectos reales con módulos interactivos, profundidad visual y animaciones suaves. El objetivo fue conservar toda la información y hacerla más clara, memorable y fácil de explorar.',
+    image: '/portfolio-about.png',
+    imageAlt: 'Sección Sobre mí del portafolio profesional',
+  },
+  {
+    shortTitle: 'CV interactivo',
+    title: 'Un currículum que se puede recorrer',
+    description:
+      'La experiencia se completa con una línea temporal, comparador de procesos y carruseles de habilidades. Cada elemento transforma el currículum tradicional en una demostración visual de capacidades, manteniendo acceso directo al documento descargable.',
+    image: '/portfolio-cv.png',
+    imageAlt: 'Currículum interactivo dentro del portafolio',
+  },
+];
+
 export default function SobreMiPage() {
   return (
     <div className="space-y-16 pb-16">
@@ -111,8 +138,37 @@ export default function SobreMiPage() {
         </div>
       </Container>
 
-      <Container id="proyectos">
-        <ProjectShowcase stages={projectStages} />
+      <Container id="proyectos" className="space-y-10">
+        <ProjectShowcase
+          slug="feud"
+          eyebrow="Caso de estudio · 2025"
+          title="FEUD: tecnología con impacto universitario."
+          summary="Un proyecto digital de gran escala construido en equipo: diseño, desarrollo, automatización y gestión de contenido para resolver una necesidad real de la comunidad estudiantil."
+          metrics={[
+            { value: '5,000+', label: 'trámites digitales' },
+            { value: '2025', label: 'año de desarrollo' },
+            { value: '03', label: 'capas del proyecto' },
+            { value: 'LIVE', label: 'producto publicado' },
+          ]}
+          browserLabel="feud.com.mx"
+          projectUrl="https://www.feud.com.mx"
+          stages={projectStages}
+        />
+        <ProjectShowcase
+          slug="portfolio"
+          eyebrow="Proyecto personal · 2026"
+          title="Daniel Reyes: un portafolio que también demuestra."
+          summary="Una experiencia web diseñada para presentar mi perfil, trayectoria y capacidades con el mismo cuidado que aplico al orden de la información: clara, interactiva y completamente adaptable."
+          metrics={[
+            { value: '03', label: 'experiencias principales' },
+            { value: '100%', label: 'diseño adaptable' },
+            { value: 'LIVE', label: 'despliegue activo' },
+            { value: '01', label: 'identidad unificada' },
+          ]}
+          browserLabel="danielreyes.vercel.app"
+          projectUrl="https://danielreyes.vercel.app"
+          stages={portfolioStages}
+        />
       </Container>
 
       <Container>

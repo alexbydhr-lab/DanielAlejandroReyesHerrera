@@ -12,40 +12,62 @@ type ProjectStage = {
   imageAlt: string;
 };
 
-export const ProjectShowcase = ({ stages }: { stages: ProjectStage[] }) => {
+type ProjectMetric = {
+  value: string;
+  label: string;
+};
+
+type ProjectShowcaseProps = {
+  slug: string;
+  eyebrow: string;
+  title: string;
+  summary: string;
+  metrics: ProjectMetric[];
+  browserLabel: string;
+  projectUrl: string;
+  stages: ProjectStage[];
+};
+
+export const ProjectShowcase = ({
+  slug,
+  eyebrow,
+  title,
+  summary,
+  metrics,
+  browserLabel,
+  projectUrl,
+  stages,
+}: ProjectShowcaseProps) => {
   const [active, setActive] = useState(0);
   const stage = stages[active];
+  const titleId = `project-${slug}-title`;
+  const panelId = `project-${slug}-stage-panel`;
 
   return (
-    <section className="project-showcase" aria-labelledby="project-title">
+    <section className="project-showcase" aria-labelledby={titleId}>
       <div className="project-showcase-head">
         <div>
-          <p className="section-kicker">Caso de estudio · 2025</p>
-          <h2 id="project-title">FEUD: tecnología con impacto universitario.</h2>
+          <p className="section-kicker">{eyebrow}</p>
+          <h2 id={titleId}>{title}</h2>
         </div>
-        <p>
-          Un proyecto digital de gran escala construido en equipo: diseño,
-          desarrollo, automatización y gestión de contenido para resolver una
-          necesidad real de la comunidad estudiantil.
-        </p>
+        <p>{summary}</p>
       </div>
 
       <div className="project-metrics" aria-label="Resultados del proyecto">
-        <div><strong>5,000+</strong><span>trámites digitales</span></div>
-        <div><strong>2025</strong><span>año de desarrollo</span></div>
-        <div><strong>03</strong><span>capas del proyecto</span></div>
-        <div><strong>LIVE</strong><span>producto publicado</span></div>
+        {metrics.map((metric) => (
+          <div key={`${metric.value}-${metric.label}`}><strong>{metric.value}</strong><span>{metric.label}</span></div>
+        ))}
       </div>
 
       <div className="project-workspace">
-        <div className="project-stage-nav" role="tablist" aria-label="Etapas del proyecto FEUD">
+        <div className="project-stage-nav" role="tablist" aria-label={`Etapas del proyecto ${title}`}>
           {stages.map((item, index) => (
             <button
               key={item.title}
               type="button"
               role="tab"
               aria-selected={active === index}
-              aria-controls="project-stage-panel"
+              aria-controls={panelId}
               onClick={() => setActive(index)}
             >
               <span>{String(index + 1).padStart(2, '0')}</span>
@@ -58,7 +80,7 @@ export const ProjectShowcase = ({ stages }: { stages: ProjectStage[] }) => {
         <div className="project-browser">
           <div className="browser-bar" aria-hidden="true">
             <div><i /><i /><i /></div>
-            <span>feud.com.mx</span>
+            <span>{browserLabel}</span>
             <b>↗</b>
           </div>
           <div className="browser-viewport">
@@ -79,7 +101,7 @@ export const ProjectShowcase = ({ stages }: { stages: ProjectStage[] }) => {
         </div>
       </div>
 
-      <div id="project-stage-panel" className="project-stage-copy" role="tabpanel">
+      <div id={panelId} className="project-stage-copy" role="tabpanel">
         <div><span>ETAPA / {String(active + 1).padStart(2, '0')}</span><strong>{stage.title}</strong></div>
         <AnimatePresence mode="wait">
           <motion.p
@@ -92,7 +114,7 @@ export const ProjectShowcase = ({ stages }: { stages: ProjectStage[] }) => {
             {stage.description}
           </motion.p>
         </AnimatePresence>
-        <a href="https://www.feud.com.mx" target="_blank" rel="noreferrer">
+        <a href={projectUrl} target="_blank" rel="noreferrer">
           Visitar proyecto <span aria-hidden="true">↗</span>
         </a>
       </div>
