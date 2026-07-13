@@ -57,6 +57,11 @@ export const Navbar = () => {
   }, []);
 
   useEffect(() => {
+    document.documentElement.classList.toggle('mobile-menu-open', open);
+    return () => document.documentElement.classList.remove('mobile-menu-open');
+  }, [open]);
+
+  useEffect(() => {
     const close = (event: PointerEvent) => {
       if (!headerRef.current?.contains(event.target as Node)) setOpen(false);
     };
@@ -73,6 +78,13 @@ export const Navbar = () => {
 
   return (
     <header ref={headerRef} className={`portfolio-header ${isScrolled ? 'is-scrolled' : ''} ${isCompact && !open ? 'is-compact' : ''} ${open ? 'is-open' : ''}`}>
+      <button
+        type="button"
+        className="portfolio-menu-backdrop"
+        aria-label="Cerrar navegación"
+        tabIndex={open ? 0 : -1}
+        onClick={() => setOpen(false)}
+      />
       <div className="portfolio-nav-shell">
         <Link href="/" className="portfolio-brand" aria-label={`${profile.shortName}, inicio`} onClick={() => setOpen(false)}>
           <span><b>DANIEL</b> <strong>REYES</strong></span>
@@ -85,18 +97,22 @@ export const Navbar = () => {
           aria-controls="portfolio-navigation"
           onClick={() => setOpen((value) => !value)}
         >
-          <span className="sr-only">Abrir navegación</span>
-          <i /><i />
+          <span className="sr-only">{open ? 'Cerrar navegación' : 'Abrir navegación'}</span>
+          <span className="portfolio-menu-label" aria-hidden="true">{open ? 'Cerrar' : 'Menú'}</span>
+          <span className="portfolio-menu-icon" aria-hidden="true"><i /><i /></span>
         </button>
 
         <nav id="portfolio-navigation" className={`portfolio-nav ${open ? 'is-open' : ''}`} aria-label="Navegación principal">
+          <div className="mobile-nav-meta" aria-hidden="true"><span>Navegación</span><b>Portafolio / 2026</b></div>
           <div className="portfolio-nav-links">
-            {links.map((link) => {
-              const route = link.href.split('#')[0];
-              const active = link.href === '/' ? pathname === '/' : Boolean(route) && pathname === route;
+            {links.map((link, index) => {
+              const [route, hash = ''] = link.href.split('#');
+              const active = !hash && pathname === route;
               return (
                 <Link key={link.href} href={link.href} className={active ? 'active' : ''} onClick={() => setOpen(false)}>
-                  {link.label}
+                  <span className="nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="nav-label">{link.label}</span>
+                  <span className="nav-arrow" aria-hidden="true">↗</span>
                 </Link>
               );
             })}
@@ -104,6 +120,7 @@ export const Navbar = () => {
           <Link className="portfolio-nav-cta" href="/cv" onClick={() => setOpen(false)}>
             CV interactivo <span aria-hidden="true">→</span>
           </Link>
+          <div className="mobile-nav-status" aria-hidden="true"><i /><span>Disponible para oportunidades</span></div>
         </nav>
       </div>
     </header>

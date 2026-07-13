@@ -64,6 +64,7 @@ export const LocationMap = ({
           rotateX: springRotateX,
           rotateY: springRotateY,
           transformStyle: 'preserve-3d',
+          maxWidth: 'calc(100vw - 32px)',
         }}
         animate={{
           width: isExpanded ? 360 : 240,

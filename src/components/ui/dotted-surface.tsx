@@ -49,6 +49,7 @@ export const DottedSurface = ({
     if (!ctx) return;
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
 
     const buildDots = (width: number, height: number) => {
       const dots: Dot[] = [];
@@ -166,7 +167,7 @@ export const DottedSurface = ({
 
     const intersectionObserver = new IntersectionObserver(([entry]) => {
       inViewRef.current = entry.isIntersecting;
-      if (prefersReducedMotion) return;
+      if (prefersReducedMotion || coarsePointer) return;
       if (inViewRef.current) {
         startAnimation();
       } else {
@@ -181,7 +182,7 @@ export const DottedSurface = ({
 
     setupCanvas();
 
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && !coarsePointer) {
       startAnimation();
     }
 

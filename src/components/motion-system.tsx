@@ -90,7 +90,7 @@ export const MotionSystem = () => {
     const canvas = canvasRef.current;
     let frame = 0;
     let resizeObserver: ResizeObserver | undefined;
-    if (canvas && !reduceMotion) {
+    if (canvas && !reduceMotion && !coarsePointer) {
       const context = canvas.getContext('2d');
       if (context) {
         let width = 0;
@@ -152,7 +152,7 @@ export const MotionSystem = () => {
 
     let cancelled = false;
     let destroyScrollMotion = () => { cancelled = true; };
-    if (!reduceMotion) {
+    if (!reduceMotion && !coarsePointer) {
       const startScrollMotion = async () => {
         const [gsapModule, triggerModule, lenisModule] = await Promise.all([
           import('gsap'), import('gsap/ScrollTrigger'), import('lenis'),
