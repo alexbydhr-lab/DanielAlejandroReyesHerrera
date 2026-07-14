@@ -6,11 +6,13 @@ import { education, experience, profile, skills } from '@/content/profile';
 import type { Metadata } from 'next';
 import { BeforeAfterComparison, InteractiveResume } from '@/components/interactive-resume';
 import { SkillsMarquee } from '@/components/skills-marquee';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: `CV | ${profile.name}`,
-  description: 'Resumen de CV listo para descargar.',
-};
+export const metadata: Metadata = createPageMetadata({
+  title: 'CV interactivo',
+  description: 'Currículum interactivo de Daniel Reyes: experiencia contable y operativa, formación, habilidades y CV disponible para descargar.',
+  path: '/cv',
+});
 
 export default function CvPage() {
   return (

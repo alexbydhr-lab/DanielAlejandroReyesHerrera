@@ -7,10 +7,29 @@ import { DottedSurface } from '@/components/ui/dotted-surface';
 import { ProjectShowcase } from '@/components/project-showcase';
 import { education, profile } from '@/content/profile';
 import type { Metadata } from 'next';
+import { createPageMetadata, SITE_URL } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: `Sobre mí | ${profile.name}`,
-  description: profile.subheadline,
+export const metadata: Metadata = createPageMetadata({
+  title: 'Sobre mí',
+  description: 'Conoce la trayectoria, formación, valores y proyectos de Daniel Reyes, estudiante de Contador Público en Durango.',
+  path: '/sobre-mi',
+});
+
+const profilePageData = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfilePage',
+  '@id': `${SITE_URL}/sobre-mi/#profile-page`,
+  url: `${SITE_URL}/sobre-mi`,
+  name: `Sobre mí | ${profile.name}`,
+  mainEntity: {
+    '@id': `${SITE_URL}/#person`,
+    '@type': 'Person',
+    name: profile.name,
+    url: SITE_URL,
+    image: `${SITE_URL}/profile.jpg`,
+    jobTitle: profile.role,
+    description: profile.subheadline,
+  },
 };
 
 const paragraphs = [
@@ -84,7 +103,11 @@ const portfolioStages = [
 export default function SobreMiPage() {
   return (
     <div className="space-y-16 pb-16">
-      <section className="relative overflow-hidden border-b border-[--line] bg-transparent">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageData).replace(/</g, '\\u003c') }}
+      />
+      <section className="relative overflow-hidden bg-transparent">
         <DottedSurface
           className="absolute inset-0 opacity-70"
           dotGap={24}

@@ -1,7 +1,7 @@
 'use client';
 
-import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
-import { useRef, useState } from 'react';
+import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 type ExperienceItem = {
   company: string;
@@ -21,74 +21,112 @@ const roleTools: Record<string, string[]> = {
 const extractYear = (period: string) => period.match(/\d{4}/)?.[0] ?? period;
 
 export const InteractiveResume = ({ experiences }: { experiences: ExperienceItem[] }) => {
+  const containerRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
   const [selected, setSelected] = useState(1);
-  const { scrollYProgress } = useScroll({ target: timelineRef, offset: ['start 72%', 'end 42%'] });
-  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: .5 });
 
-  const focusRole = (index: number) => {
-    setSelected(index);
-    document.getElementById(`resume-role-${index}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  };
+  useEffect(() => {
+    const timeline = timelineRef.current;
+    if (!timeline) return;
+
+    const updateHeight = () => setHeight(timeline.getBoundingClientRect().height);
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    observer.observe(timeline);
+    return () => observer.disconnect();
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start 12%', 'end 52%'],
+  });
+  const smoothProgress = useSpring(scrollYProgress, { stiffness: 78, damping: 25, mass: .42 });
+  const lineHeight = useTransform(smoothProgress, [0, 1], [0, height]);
+  const lineOpacity = useTransform(smoothProgress, [0, 0.08], [0, 1]);
 
   return (
-    <section className="resume-experience" aria-labelledby="resume-experience-title">
+    <section ref={containerRef} className="resume-experience" aria-labelledby="resume-experience-title">
       <div className="resume-heading">
         <div><p className="section-kicker">Trayectoria interactiva</p><h2 id="resume-experience-title">Experiencia que evoluciona con cada rol.</h2></div>
-        <p>Recorre la línea temporal y selecciona una etapa para consultar responsabilidades, logros y herramientas utilizadas.</p>
+        <p>La línea se activa a medida que avanzas. Selecciona cada etapa para descubrir responsabilidades, logros y herramientas utilizadas.</p>
       </div>
 
-      <div ref={timelineRef} className="resume-layout">
-        <aside className="resume-years" aria-label="Periodos de experiencia">
-          <span>PERIODO</span>
-          {experiences.map((experience, index) => (
-            <button key={`${experience.role}-${experience.period}`} type="button" className={selected === index ? 'active' : ''} onClick={() => focusRole(index)}>
-              <strong>{extractYear(experience.period)}</strong><small>{String(index + 1).padStart(2, '0')}</small>
-            </button>
-          ))}
-        </aside>
-
-        <div className="resume-timeline">
-          <div className="resume-line" aria-hidden="true"><motion.i style={{ scaleY: progress }} /></div>
+      <div className="journey-timeline">
+        <div ref={timelineRef} className="journey-measure">
           {experiences.map((experience, index) => {
-            const active = selected === index;
-            return (
-              <article
-                id={`resume-role-${index}`}
-                key={`${experience.role}-${experience.company}`}
-                className={`resume-role-card ${active ? 'is-active' : ''}`}
-                onClick={() => setSelected(index)}
-              >
-                <button type="button" aria-expanded={active} aria-controls={`resume-details-${index}`}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <div><small>{experience.period}</small><h3>{experience.role}</h3><p>{experience.company}</p></div>
-                  <i aria-hidden="true">{active ? '−' : '+'}</i>
-                </button>
-                <AnimatePresence initial={false}>
-                  {active && (
-                    <motion.div
-                      id={`resume-details-${index}`}
-                      className="resume-role-details"
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: 'auto', opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: .45, ease: [0.2, .8, .2, 1] }}
+              const active = selected === index;
+              return (
+                <div
+                  id={`resume-role-${index}`}
+                  key={`${experience.role}-${experience.company}`}
+                  className="journey-entry"
+                >
+                  <div className="journey-year">
+                    <div className={`journey-node ${active ? 'is-active' : ''}`} aria-hidden="true"><i /></div>
+                    <h3>{extractYear(experience.period)}</h3>
+                    <small>{experience.period}</small>
+                  </div>
+
+                  <div className="journey-content">
+                    <div className="journey-mobile-period" aria-hidden="true">
+                      <strong>{extractYear(experience.period)}</strong><span>{experience.period}</span>
+                    </div>
+                    <motion.article
+                      className={`journey-card ${active ? 'is-active' : ''}`}
+                      initial={{ opacity: 0, y: 30 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.24 }}
+                      transition={{ duration: .58, delay: index * .04, ease: [0.16, 1, 0.3, 1] }}
                     >
-                      <div className="resume-achievements">
-                        <span>RESPONSABILIDADES / LOGROS</span>
-                        <ul>{experience.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
-                        {experience.highlight && <blockquote>{experience.highlight}</blockquote>}
-                      </div>
-                      <div className="resume-toolkit">
-                        <span>HERRAMIENTAS / CAPACIDADES</span>
-                        <div>{(roleTools[experience.role] ?? []).map((tool) => <b key={tool}>{tool}</b>)}</div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </article>
-            );
-          })}
+                      <button
+                        type="button"
+                        className="journey-card-trigger"
+                        aria-expanded={active}
+                        aria-controls={`resume-details-${index}`}
+                        onClick={() => setSelected(active ? -1 : index)}
+                      >
+                        <span className="journey-index">{String(index + 1).padStart(2, '0')}</span>
+                        <span className="journey-role-copy">
+                          <small>{experience.company}</small>
+                          <strong>{experience.role}</strong>
+                          <em>{experience.bullets[0]}</em>
+                        </span>
+                        <span className="journey-toggle" aria-hidden="true">{active ? '−' : '+'}</span>
+                      </button>
+
+                      <AnimatePresence initial={false}>
+                        {active && (
+                          <motion.div
+                            id={`resume-details-${index}`}
+                            className="journey-details"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: .5, ease: [0.16, 1, 0.3, 1] }}
+                          >
+                            <div className="journey-achievements">
+                              <span>RESPONSABILIDADES / LOGROS</span>
+                              <ul>{experience.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}</ul>
+                              {experience.highlight && <blockquote>{experience.highlight}</blockquote>}
+                            </div>
+                            <div className="journey-toolkit">
+                              <span>HERRAMIENTAS / CAPACIDADES</span>
+                              <div>{(roleTools[experience.role] ?? []).map((tool) => <b key={tool}>{tool}</b>)}</div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.article>
+                  </div>
+                </div>
+              );
+            })}
+
+          <div style={{ height }} className="journey-line" aria-hidden="true">
+            <motion.i style={{ height: lineHeight, opacity: lineOpacity }} />
+          </div>
         </div>
       </div>
     </section>

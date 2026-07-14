@@ -4,11 +4,13 @@ import { Card } from '@/components/ui/card';
 import { contactInfo, faq, profile } from '@/content/profile';
 import type { Metadata } from 'next';
 import ContactForm from './contact-form';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: `Contacto | ${profile.name}`,
-  description: 'Hablemos sobre cómo puedo apoyar en contabilidad u operación.',
-};
+export const metadata: Metadata = createPageMetadata({
+  title: 'Contacto',
+  description: 'Contacta a Daniel Reyes para oportunidades profesionales, colaboración o apoyo en contabilidad, análisis y operación.',
+  path: '/contacto',
+});
 
 export default function ContactoPage() {
   return (
