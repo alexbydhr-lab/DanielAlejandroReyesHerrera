@@ -1,20 +1,21 @@
 import { Container } from '@/components/ui/container';
 import { SectionTitle } from '@/components/ui/section-title';
 import { Card } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { contactInfo, faq, profile } from '@/content/profile';
 import type { Metadata } from 'next';
 import ContactForm from './contact-form';
+import { createPageMetadata } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: `Contacto | ${profile.name}`,
-  description: 'Hablemos sobre cómo puedo apoyar en contabilidad u operación.',
-};
+export const metadata: Metadata = createPageMetadata({
+  title: 'Contacto',
+  description: 'Contacta a Daniel Reyes para oportunidades profesionales, colaboración o apoyo en contabilidad, análisis y operación.',
+  path: '/contacto',
+});
 
 export default function ContactoPage() {
   return (
     <div className="space-y-14 pb-16">
-      <section className="bg-white">
+      <section className="border-b border-[--line] bg-transparent">
         <Container className="space-y-4 py-10">
           <SectionTitle title="Contacto" subtitle="¿Necesitas apoyo contable u operativo? Escríbeme." />
         </Container>

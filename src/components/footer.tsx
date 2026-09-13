@@ -1,42 +1,44 @@
 import Link from 'next/link';
 import { contactInfo, profile } from '@/content/profile';
-import { TextParticle } from '@/components/ui/text-particle';
+import Text3DFlip from '@/registry/magicui/text-3d-flip';
 
 export const Footer = () => {
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-12 border-t border-black/5 bg-white">
-      <div className="mx-auto flex w-full max-w-6xl flex-col gap-4 px-4 py-6 sm:px-6 sm:flex-row sm:items-center sm:justify-between">
+    <footer className="portfolio-footer">
+      <div className="footer-grid">
         <div>
-          <p className="text-sm font-semibold text-[--foreground]">{profile.name}</p>
-          <p className="text-xs text-[--muted]">© {year} {profile.name}</p>
+          <Link href="/" className="portfolio-brand footer-brand">
+            <span className="brand-mark" aria-hidden="true"><i /></span>
+            <span><b>DANIEL</b> <strong>REYES</strong></span>
+          </Link>
+          <p>Contabilidad, operación y análisis financiero con enfoque práctico.</p>
         </div>
-        <div className="flex flex-wrap items-center gap-4 text-sm text-[--muted]">
-          <Link href="/sobre-mi" className="hover:text-[--accent]">
-            Sobre mí
-          </Link>
-          <Link href="/contacto" className="hover:text-[--accent]">
-            Contacto
-          </Link>
-          <a href={`mailto:${contactInfo.email}`} className="hover:text-[--accent]">
-            {contactInfo.email}
-          </a>
-          <a href={`tel:${contactInfo.phone}`} className="hover:text-[--accent]">
-            {contactInfo.phone}
-          </a>
+        <div>
+          <span className="footer-kicker">Navegación</span>
+          <Link href="/sobre-mi">Sobre mí</Link>
+          <Link href="/#experiencia">Experiencia</Link>
+          <Link href="/cv">Currículum</Link>
+        </div>
+        <div>
+          <span className="footer-kicker">Contacto</span>
+          <a href={`mailto:${contactInfo.email}`}>{contactInfo.email}</a>
+          <a href={`tel:${contactInfo.phone}`}>{contactInfo.phone}</a>
+          <span>{contactInfo.location}</span>
         </div>
       </div>
-      <div className="mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6">
-        <div className="h-32 sm:h-36">
-          <TextParticle
-            text="Daniel Reyes"
-            fontSize={110}
-            particleColor="#0b2f70"
-            particleSize={2}
-            particleDensity={5}
-          />
-        </div>
-      </div>
+      <Text3DFlip
+        className="footer-signature"
+        textClassName="footer-flip-front"
+        flipTextClassName="footer-flip-back"
+        rotateDirection="top"
+        staggerDuration={0.03}
+        staggerFrom="first"
+        transition={{ type: 'spring', damping: 25, stiffness: 160 }}
+      >
+        DANIEL REYES
+      </Text3DFlip>
+      <div className="footer-bottom"><span>© {year} {profile.name}</span><span>Disponible para oportunidades profesionales</span></div>
     </footer>
   );
 };
