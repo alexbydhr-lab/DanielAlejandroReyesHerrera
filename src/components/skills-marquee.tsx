@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Marquee } from '@/registry/magicui/marquee';
 
 const getCategory = (skill: string) => {
@@ -12,12 +12,30 @@ const getCategory = (skill: string) => {
 
 export const SkillsMarquee = ({ skills }: { skills: string[] }) => {
   const [hovered, setHovered] = useState<{ skill: string; row: 'a' | 'b' } | null>(null);
+  const [isInView, setIsInView] = useState(false);
+  const shellRef = useRef<HTMLDivElement>(null);
   const midpoint = Math.ceil(skills.length / 2);
   // Marquee creates the second copy required for the infinite loop.
   // Keeping only one source set here prevents repeated cards from receiving
   // the focus treatment at the same time.
   const firstRow = skills.slice(0, midpoint);
   const secondRow = skills.slice(midpoint);
+
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting && !document.hidden),
+      { rootMargin: '120px 0px', threshold: 0 },
+    );
+    const handleVisibility = () => setIsInView(!document.hidden && shell.getBoundingClientRect().bottom > 0 && shell.getBoundingClientRect().top < window.innerHeight);
+    observer.observe(shell);
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, []);
 
   const renderCard = (skill: string, index: number, row: 'a' | 'b') => (
     <article
@@ -36,7 +54,7 @@ export const SkillsMarquee = ({ skills }: { skills: string[] }) => {
   );
 
   return (
-    <div className="skills-marquee-shell" onMouseLeave={() => setHovered(null)}>
+    <div ref={shellRef} className={`skills-marquee-shell ${isInView ? 'is-in-view' : ''}`} onMouseLeave={() => setHovered(null)}>
       <Marquee pauseOnHover className={`skills-marquee-row marquee-row-one ${hovered?.row === 'a' ? 'row-is-focused' : ''}`}>
         {firstRow.map((skill, index) => renderCard(skill, index, 'a'))}
       </Marquee>

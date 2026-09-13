@@ -1,7 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { type CSSProperties, useRef, useState } from 'react';
 
 type ExperienceItem = {
   company: string;
@@ -22,28 +22,14 @@ const extractYear = (period: string) => period.match(/\d{4}/)?.[0] ?? period;
 
 export const InteractiveResume = ({ experiences }: { experiences: ExperienceItem[] }) => {
   const containerRef = useRef<HTMLElement>(null);
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
   const [selected, setSelected] = useState(1);
-
-  useEffect(() => {
-    const timeline = timelineRef.current;
-    if (!timeline) return;
-
-    const updateHeight = () => setHeight(timeline.getBoundingClientRect().height);
-    updateHeight();
-
-    const observer = new ResizeObserver(updateHeight);
-    observer.observe(timeline);
-    return () => observer.disconnect();
-  }, []);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start 12%', 'end 52%'],
   });
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 78, damping: 25, mass: .42 });
-  const lineHeight = useTransform(smoothProgress, [0, 1], [0, height]);
+  const lineScale = useTransform(smoothProgress, [0, 1], [0, 1]);
   const lineOpacity = useTransform(smoothProgress, [0, 0.08], [0, 1]);
 
   return (
@@ -54,7 +40,7 @@ export const InteractiveResume = ({ experiences }: { experiences: ExperienceItem
       </div>
 
       <div className="journey-timeline">
-        <div ref={timelineRef} className="journey-measure">
+        <div className="journey-measure">
           {experiences.map((experience, index) => {
               const active = selected === index;
               return (
@@ -124,8 +110,8 @@ export const InteractiveResume = ({ experiences }: { experiences: ExperienceItem
               );
             })}
 
-          <div style={{ height }} className="journey-line" aria-hidden="true">
-            <motion.i style={{ height: lineHeight, opacity: lineOpacity }} />
+          <div className="journey-line" aria-hidden="true">
+            <motion.i style={{ scaleY: lineScale, opacity: lineOpacity, transformOrigin: 'top' }} />
           </div>
         </div>
       </div>
@@ -134,9 +120,17 @@ export const InteractiveResume = ({ experiences }: { experiences: ExperienceItem
 };
 
 export const BeforeAfterComparison = () => {
-  const [position, setPosition] = useState(52);
+  const comparisonRef = useRef<HTMLElement>(null);
+  const updatePosition = (position: number) => {
+    comparisonRef.current?.style.setProperty('--comparison-position', `${position}%`);
+  };
   return (
-    <section className="process-comparison" aria-labelledby="comparison-title">
+    <section
+      ref={comparisonRef}
+      className="process-comparison"
+      style={{ '--comparison-position': '52%' } as CSSProperties}
+      aria-labelledby="comparison-title"
+    >
       <div className="comparison-heading">
         <div><p className="section-kicker">Antes / después</p><h2 id="comparison-title">De información dispersa a decisiones claras.</h2></div>
         <p>Arrastra el control para comparar un proceso sin estructura frente a una operación organizada y medible.</p>
@@ -151,18 +145,18 @@ export const BeforeAfterComparison = () => {
           </div>
           <ul><li>Registros conciliados</li><li>Variaciones identificadas</li><li>Reporte listo para decidir</li></ul>
         </div>
-        <div className="comparison-scene comparison-before" style={{ clipPath: `inset(0 ${100 - position}% 0 0)` }}>
+        <div className="comparison-scene comparison-before">
           <div className="comparison-label"><span>ANTES</span><strong>Información dispersa</strong></div>
           <div className="messy-documents" aria-hidden="true"><i /><i /><i /><i /></div>
           <ul><li>Archivos sin conciliar</li><li>Inventario sin seguimiento</li><li>Decisiones con información tardía</li></ul>
         </div>
-        <div className="comparison-divider" style={{ left: `${position}%` }} aria-hidden="true"><span>↔</span></div>
+        <div className="comparison-divider" aria-hidden="true"><span>↔</span></div>
         <input
           type="range"
           min="0"
           max="100"
-          value={position}
-          onChange={(event) => setPosition(Number(event.target.value))}
+          defaultValue="52"
+          onInput={(event) => updatePosition(Number(event.currentTarget.value))}
           aria-label="Comparar proceso antes y después"
         />
       </div>

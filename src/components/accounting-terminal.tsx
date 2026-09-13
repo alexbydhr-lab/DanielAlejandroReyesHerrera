@@ -46,10 +46,10 @@ export const AccountingTerminal = () => {
         if (reduceMotion) {
           setLines((current) => current.map((line, index) => index === lineIndex ? command : line));
         } else {
-          for (let character = 1; character <= command.length; character += 1) {
+          for (let character = 2; character <= command.length + 1; character += 2) {
             if (cancelled) return;
             setLines((current) => current.map((line, index) => index === lineIndex ? command.slice(0, character) : line));
-            await wait(lineIndex === commands.length - 1 ? 24 : 30);
+            await wait(lineIndex === commands.length - 1 ? 34 : 44);
           }
           await wait(lineIndex === commands.length - 1 ? 220 : 430);
         }

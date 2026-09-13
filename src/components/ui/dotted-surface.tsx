@@ -50,6 +50,8 @@ export const DottedSurface = ({
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarsePointer = window.matchMedia('(pointer: coarse)').matches;
+    let canvasWidth = 0;
+    let canvasHeight = 0;
 
     const buildDots = (width: number, height: number) => {
       const dots: Dot[] = [];
@@ -75,10 +77,12 @@ export const DottedSurface = ({
     const setupCanvas = () => {
       const width = container.clientWidth;
       const height = container.clientHeight;
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvasWidth = width;
+      canvasHeight = height;
 
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
+      canvas.width = Math.round(width * dpr);
+      canvas.height = Math.round(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -97,6 +101,7 @@ export const DottedSurface = ({
 
       ctx.fillStyle = dotColor;
       const mouse = mouseRef.current;
+      let isMoving = false;
 
       for (const dot of dotsRef.current) {
         let targetX = dot.baseX;
@@ -114,8 +119,11 @@ export const DottedSurface = ({
           }
         }
 
-        dot.x += (targetX - dot.x) * 0.08;
-        dot.y += (targetY - dot.y) * 0.08;
+        const moveX = (targetX - dot.x) * 0.08;
+        const moveY = (targetY - dot.y) * 0.08;
+        dot.x += moveX;
+        dot.y += moveY;
+        if (Math.abs(moveX) > .02 || Math.abs(moveY) > .02) isMoving = true;
 
         ctx.globalAlpha = dot.opacity;
         ctx.beginPath();
@@ -124,14 +132,15 @@ export const DottedSurface = ({
       }
 
       ctx.globalAlpha = 1;
+      return isMoving;
     };
 
     const animate = () => {
       if (!canvas || !container) return;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      drawFrame(width, height);
-      animationRef.current = window.requestAnimationFrame(animate);
+      const isMoving = drawFrame(canvasWidth, canvasHeight);
+      animationRef.current = isMoving && inViewRef.current
+        ? window.requestAnimationFrame(animate)
+        : null;
     };
 
     const startAnimation = () => {
@@ -152,6 +161,7 @@ export const DottedSurface = ({
 
       if (x >= 0 && y >= 0 && x <= rect.width && y <= rect.height) {
         mouseRef.current = { x, y };
+        if (inViewRef.current && !prefersReducedMotion && !coarsePointer) startAnimation();
       } else {
         mouseRef.current = { x: null, y: null };
       }
@@ -159,36 +169,36 @@ export const DottedSurface = ({
 
     const handlePointerLeave = () => {
       mouseRef.current = { x: null, y: null };
+      if (inViewRef.current && !prefersReducedMotion && !coarsePointer) startAnimation();
     };
 
+    let resizeTimer = 0;
     const resizeObserver = new ResizeObserver(() => {
-      setupCanvas();
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(setupCanvas, 140);
     });
 
     const intersectionObserver = new IntersectionObserver(([entry]) => {
       inViewRef.current = entry.isIntersecting;
       if (prefersReducedMotion || coarsePointer) return;
       if (inViewRef.current) {
-        startAnimation();
+        drawFrame(canvasWidth, canvasHeight);
       } else {
         stopAnimation();
       }
     });
 
-    window.addEventListener('pointermove', handlePointerMove);
-    window.addEventListener('pointerleave', handlePointerLeave);
+    container.addEventListener('pointermove', handlePointerMove, { passive: true });
+    container.addEventListener('pointerleave', handlePointerLeave);
     resizeObserver.observe(container);
     intersectionObserver.observe(container);
 
     setupCanvas();
 
-    if (!prefersReducedMotion && !coarsePointer) {
-      startAnimation();
-    }
-
     return () => {
-      window.removeEventListener('pointermove', handlePointerMove);
-      window.removeEventListener('pointerleave', handlePointerLeave);
+      container.removeEventListener('pointermove', handlePointerMove);
+      container.removeEventListener('pointerleave', handlePointerLeave);
+      window.clearTimeout(resizeTimer);
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
       stopAnimation();

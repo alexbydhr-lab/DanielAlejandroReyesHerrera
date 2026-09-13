@@ -86,7 +86,7 @@ export const Navbar = () => {
         onClick={() => setOpen(false)}
       />
       <div className="portfolio-nav-shell">
-        <Link href="/" className="portfolio-brand" aria-label={`${profile.shortName}, inicio`} onClick={() => setOpen(false)}>
+        <Link href="/" prefetch={false} className="portfolio-brand" aria-label={`${profile.shortName}, inicio`} onClick={() => setOpen(false)}>
           <span><b>DANIEL</b> <strong>REYES</strong></span>
         </Link>
 
@@ -109,7 +109,7 @@ export const Navbar = () => {
               const [route, hash = ''] = link.href.split('#');
               const active = !hash && pathname === route;
               return (
-                <Link key={link.href} href={link.href} className={active ? 'active' : ''} onClick={() => setOpen(false)}>
+                <Link key={link.href} href={link.href} prefetch={false} className={active ? 'active' : ''} onClick={() => setOpen(false)}>
                   <span className="nav-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                   <span className="nav-label">{link.label}</span>
                   <span className="nav-arrow" aria-hidden="true">↗</span>
@@ -117,7 +117,7 @@ export const Navbar = () => {
               );
             })}
           </div>
-          <Link className="portfolio-nav-cta" href="/cv" onClick={() => setOpen(false)}>
+          <Link className="portfolio-nav-cta" href="/cv" prefetch={false} onClick={() => setOpen(false)}>
             CV interactivo <span aria-hidden="true">→</span>
           </Link>
           <div className="mobile-nav-status" aria-hidden="true"><i /><span>Disponible para oportunidades</span></div>

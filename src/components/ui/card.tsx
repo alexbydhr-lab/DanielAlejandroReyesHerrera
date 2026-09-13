@@ -1,7 +1,5 @@
-'use client';
 import { ReactNode } from 'react';
 import clsx from 'clsx';
-import { motion } from 'framer-motion';
 
 type Props = {
   children: ReactNode;
@@ -10,7 +8,7 @@ type Props = {
 };
 
 export const Card = ({ children, className = '', interactive = false }: Props) => (
-  <motion.div
+  <div
     className={clsx(
       'card p-5 sm:p-6 transition-transform duration-200',
       interactive && 'interactive-card',
@@ -18,5 +16,5 @@ export const Card = ({ children, className = '', interactive = false }: Props) =
     )}
   >
     {children}
-  </motion.div>
+  </div>
 );

@@ -1,7 +1,7 @@
 'use client';
 
 import type React from 'react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import clsx from 'clsx';
 
@@ -19,6 +19,9 @@ export const LocationMap = ({
   const [isHovered, setIsHovered] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const boundsRef = useRef<DOMRect | null>(null);
+  const pointerFrameRef = useRef(0);
+  const pointerRef = useRef({ x: 0, y: 0 });
 
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
@@ -31,22 +34,41 @@ export const LocationMap = ({
 
   const handleMouseMove = (e: React.MouseEvent) => {
     if (!containerRef.current) return;
-    const rect = containerRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    mouseX.set(e.clientX - centerX);
-    mouseY.set(e.clientY - centerY);
+    pointerRef.current = { x: e.clientX, y: e.clientY };
+    if (pointerFrameRef.current) return;
+    pointerFrameRef.current = requestAnimationFrame(() => {
+      const rect = boundsRef.current ?? containerRef.current?.getBoundingClientRect();
+      if (rect) {
+        boundsRef.current = rect;
+        mouseX.set(pointerRef.current.x - (rect.left + rect.width / 2));
+        mouseY.set(pointerRef.current.y - (rect.top + rect.height / 2));
+      }
+      pointerFrameRef.current = 0;
+    });
+  };
+
+  const handleMouseEnter = () => {
+    boundsRef.current = containerRef.current?.getBoundingClientRect() ?? null;
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
+    if (pointerFrameRef.current) cancelAnimationFrame(pointerFrameRef.current);
+    pointerFrameRef.current = 0;
+    boundsRef.current = null;
     mouseX.set(0);
     mouseY.set(0);
     setIsHovered(false);
   };
 
   const handleClick = () => {
+    boundsRef.current = null;
     setIsExpanded(!isExpanded);
   };
+
+  useEffect(() => () => {
+    if (pointerFrameRef.current) cancelAnimationFrame(pointerFrameRef.current);
+  }, []);
 
   return (
     <motion.div
@@ -54,7 +76,7 @@ export const LocationMap = ({
       className={clsx('relative cursor-pointer select-none', className)}
       style={{ perspective: 1000 }}
       onMouseMove={handleMouseMove}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >

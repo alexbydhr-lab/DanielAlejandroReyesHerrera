@@ -8,7 +8,7 @@ export const Footer = () => {
     <footer className="portfolio-footer">
       <div className="footer-grid">
         <div>
-          <Link href="/" className="portfolio-brand footer-brand">
+          <Link href="/" prefetch={false} className="portfolio-brand footer-brand">
             <span className="brand-mark" aria-hidden="true"><i /></span>
             <span><b>DANIEL</b> <strong>REYES</strong></span>
           </Link>
@@ -16,9 +16,9 @@ export const Footer = () => {
         </div>
         <div>
           <span className="footer-kicker">Navegación</span>
-          <Link href="/sobre-mi">Sobre mí</Link>
-          <Link href="/#experiencia">Experiencia</Link>
-          <Link href="/cv">Currículum</Link>
+          <Link href="/sobre-mi" prefetch={false}>Sobre mí</Link>
+          <Link href="/#experiencia" prefetch={false}>Experiencia</Link>
+          <Link href="/cv" prefetch={false}>Currículum</Link>
         </div>
         <div>
           <span className="footer-kicker">Contacto</span>
@@ -34,7 +34,6 @@ export const Footer = () => {
         rotateDirection="top"
         staggerDuration={0.03}
         staggerFrom="first"
-        transition={{ type: 'spring', damping: 25, stiffness: 160 }}
       >
         DANIEL REYES
       </Text3DFlip>

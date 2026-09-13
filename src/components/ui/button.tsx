@@ -11,6 +11,7 @@ type Props = {
   variant?: Variant;
   className?: string;
   type?: 'button' | 'submit';
+  prefetch?: boolean;
 };
 
 const base =
@@ -22,11 +23,11 @@ const variants: Record<Variant, string> = {
   ghost: 'button-ghost px-4 py-2',
 };
 
-export const Button = ({ href, onClick, children, variant = 'primary', className = '', type = 'button' }: Props) => {
+export const Button = ({ href, onClick, children, variant = 'primary', className = '', type = 'button', prefetch = false }: Props) => {
   const classes = clsx(base, variants[variant], className);
   if (href) {
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} prefetch={prefetch} className={classes}>
         {children}
       </Link>
     );
