@@ -11,12 +11,12 @@ type Props = {
   last?: boolean;
 };
 
-export const TimelineItem = ({ title, subtitle, period, children, highlight, first, last }: Props) => (
+export const TimelineItem = ({ title, subtitle, period, children, highlight, last }: Props) => (
   <div className="grid gap-3 md:grid-cols-[160px,1fr]">
     <div className="flex items-start gap-2 text-sm font-semibold text-[--foreground]">
       <div className="relative flex flex-col items-center">
         <span className="h-3 w-3 rounded-full bg-[--accent]" />
-        {!last && <span className="mt-1 w-px grow bg-black/10" aria-hidden />}
+        {!last && <span className="mt-1 w-px grow bg-[--line]" aria-hidden />}
       </div>
     <div>
       <p>{period}</p>
@@ -25,7 +25,7 @@ export const TimelineItem = ({ title, subtitle, period, children, highlight, fir
   </div>
     <div
       className={clsx(
-        'rounded-2xl border border-black/5 bg-white p-4 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[--accent]/30',
+        'rounded-2xl border border-[--line] bg-[--card] p-4 shadow-sm transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg hover:border-[--accent]/50',
       )}
     >
       <div className="flex flex-wrap items-start justify-between gap-2">

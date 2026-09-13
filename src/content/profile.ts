@@ -19,7 +19,7 @@ export const profile = {
   },
   ctaPrimary: '/contacto',
   ctaSecondary: '#experiencia',
-  ogImage: '/og-image.png',
+  ogImage: '/opengraph-image',
 };
 
 export const services = [
@@ -80,7 +80,7 @@ export const experience = [
   {
     company: 'Tang',
     role: 'Promotor',
-    period: 'Junio 2025 - Octubre 2025',
+    period: 'Junio 2025 - Presente',
     bullets: [
       'Promoción y venta directa con comunicación persuasiva.',
       'Cierre y trato con distintos perfiles de clientes.',

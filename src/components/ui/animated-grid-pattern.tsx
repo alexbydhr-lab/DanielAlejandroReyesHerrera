@@ -62,6 +62,8 @@ export const AnimatedGridPattern = ({
     if (dimensions.width && dimensions.height) {
       setSquares(generateSquares(numSquares));
     }
+    // `generateSquares` intentionally reads the latest measured dimensions.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dimensions.width, dimensions.height, numSquares]);
 
   useEffect(() => {
@@ -74,13 +76,14 @@ export const AnimatedGridPattern = ({
       }
     });
 
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
+    const container = containerRef.current;
+    if (container) {
+      resizeObserver.observe(container);
     }
 
     return () => {
-      if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current);
+      if (container) {
+        resizeObserver.unobserve(container);
       }
     };
   }, []);
