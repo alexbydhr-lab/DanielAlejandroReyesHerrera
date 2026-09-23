@@ -104,9 +104,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, '\\u003c') }}
         />
         <MotionSystem />
-        <Navbar />
-        <PageShell>{children}</PageShell>
-        <Footer />
+        <div className="site-frame">
+          <Navbar />
+          <PageShell>{children}</PageShell>
+          <Footer />
+        </div>
       </body>
     </html>
   );

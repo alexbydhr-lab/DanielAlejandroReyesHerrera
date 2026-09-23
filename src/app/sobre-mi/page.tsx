@@ -6,6 +6,7 @@ import { LocationMap } from '@/components/ui/location-map';
 import { DottedSurface } from '@/components/ui/dotted-surface';
 import { ProjectShowcase } from '@/components/project-showcase';
 import { education, profile } from '@/content/profile';
+import { tecmiappStages } from '@/content/tecmiapp';
 import type { Metadata } from 'next';
 import { createPageMetadata, SITE_URL } from '@/lib/seo';
 
@@ -177,6 +178,23 @@ export default function SobreMiPage() {
           projectUrl="https://www.feud.com.mx"
           stages={projectStages}
         />
+        <div id="tecmiapp">
+          <ProjectShowcase
+            slug="tecmiapp"
+            eyebrow="Proyecto académico · Finanzas personales"
+            title="Tecmiapp: tus finanzas, con inteligencia artificial."
+            summary="Una aplicación que desarrollé para un proyecto académico y conecté con n8n: movimientos, presupuestos, tarjetas con recordatorios de pago, análisis y consultas con IA sobre tus propias finanzas, además de panorama y noticias financieras."
+            metrics={[
+              { value: 'IA', label: 'consultas financieras' },
+              { value: 'n8n', label: 'integración del asistente' },
+              { value: 'Control', label: 'movimientos y presupuestos' },
+              { value: 'Tarjetas', label: 'recordatorios y análisis' },
+            ]}
+            browserLabel="studio-phi-teal.vercel.app"
+            projectUrl="https://studio-phi-teal.vercel.app/dashboard"
+            stages={tecmiappStages}
+          />
+        </div>
         <ProjectShowcase
           slug="portfolio"
           eyebrow="Proyecto personal · 2026"

@@ -17,45 +17,6 @@ export const Navbar = () => {
   const pathname = usePathname();
   const headerRef = useRef<HTMLElement>(null);
   const [open, setOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [isCompact, setIsCompact] = useState(false);
-
-  useEffect(() => {
-    let previousY = window.scrollY;
-    let latestY = previousY;
-    let frame = 0;
-    let directionTravel = 0;
-    let previousDirection = 0;
-    const update = () => {
-      latestY = window.scrollY;
-      if (frame) return;
-      frame = requestAnimationFrame(() => {
-        const delta = latestY - previousY;
-        const direction = Math.sign(delta);
-        setIsScrolled(latestY > 18);
-        if (latestY <= 18) {
-          setIsCompact(false);
-          directionTravel = 0;
-        } else if (direction !== 0) {
-          directionTravel = direction === previousDirection ? directionTravel + Math.abs(delta) : Math.abs(delta);
-          if (directionTravel >= 14) {
-            setIsCompact(direction > 0);
-            directionTravel = 0;
-          }
-          previousDirection = direction;
-        }
-        previousY = latestY;
-        frame = 0;
-      });
-    };
-    update();
-    window.addEventListener('scroll', update, { passive: true });
-    return () => {
-      if (frame) cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', update);
-    };
-  }, []);
-
   useEffect(() => {
     document.documentElement.classList.toggle('mobile-menu-open', open);
     return () => document.documentElement.classList.remove('mobile-menu-open');
@@ -77,7 +38,7 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <header ref={headerRef} className={`portfolio-header ${isScrolled ? 'is-scrolled' : ''} ${isCompact && !open ? 'is-compact' : ''} ${open ? 'is-open' : ''}`}>
+    <header ref={headerRef} className={`portfolio-header ${open ? 'is-open' : ''}`}>
       <button
         type="button"
         className="portfolio-menu-backdrop"

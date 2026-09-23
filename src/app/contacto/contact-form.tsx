@@ -27,21 +27,22 @@ export default function ContactForm() {
   };
 
   return (
-    <form className="space-y-3" onSubmit={onSubmit}>
-      <div>
-        <label className="block text-sm font-semibold text-[--foreground]" htmlFor="name">
+    <form className="contact-form" onSubmit={onSubmit}>
+      <div className="contact-field">
+        <label htmlFor="name">
           Nombre
         </label>
         <input
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 w-full rounded-lg border px-3 py-2 text-sm text-[--foreground] focus:outline-none"
-          placeholder="Tu nombre"
+          className="contact-input"
+          placeholder="¿Cómo te llamas?"
+          autoComplete="name"
         />
       </div>
-      <div>
-        <label className="block text-sm font-semibold text-[--foreground]" htmlFor="email">
+      <div className="contact-field">
+        <label htmlFor="email">
           Email
         </label>
         <input
@@ -50,12 +51,13 @@ export default function ContactForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          className="mt-1 w-full rounded-lg border px-3 py-2 text-sm text-[--foreground] focus:outline-none"
+          className="contact-input"
           placeholder="tu@email.com"
+          autoComplete="email"
         />
       </div>
-      <div>
-        <label className="block text-sm font-semibold text-[--foreground]" htmlFor="message">
+      <div className="contact-field contact-message-field">
+        <label htmlFor="message">
           Mensaje
         </label>
         <textarea
@@ -63,22 +65,22 @@ export default function ContactForm() {
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           required
-          rows={4}
-          className="mt-1 w-full rounded-lg border px-3 py-2 text-sm text-[--foreground] focus:outline-none"
-          placeholder="Cuéntame brevemente qué necesitas…"
+          rows={6}
+          className="contact-input"
+          placeholder="Cuéntame brevemente qué necesitas, qué información tienes y cuál es el resultado que buscas…"
         />
       </div>
-      {status === 'error' && <p className="text-xs text-red-600">Incluye tu email y mensaje para continuar.</p>}
-      <div className="flex items-center gap-3">
-        <Button type="submit" className="bg-[#0b2f70] text-white hover:bg-[#0a5dff]">
-          Abrir email
+      {status === 'error' && <p className="contact-form-error" role="alert">Incluye tu email y mensaje para continuar.</p>}
+      <div className="contact-form-actions">
+        <Button type="submit" className="contact-submit">
+          Preparar mensaje <span aria-hidden="true">↗</span>
         </Button>
-        <a className="text-sm text-[--accent]" href={mailtoHref}>
-          Copiar enlace mailto
+        <a className="contact-direct-link" href={`mailto:${contactInfo.email}`}>
+          Escribir directamente
         </a>
       </div>
-      <p className="text-xs text-[--muted]">
-        El formulario abre tu cliente de correo con el mensaje prellenado. También puedes escribir a {profile.email}.
+      <p className="contact-form-note">
+        <span aria-hidden="true">i</span> Se abrirá tu cliente de correo con el mensaje listo para revisar y enviar a {profile.email}.
       </p>
     </form>
   );

@@ -7,7 +7,12 @@ export const PageShell = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Let section links keep their destination when navigating between pages.
+    if (window.location.hash) {
+      document.getElementById(decodeURIComponent(window.location.hash.slice(1)))?.scrollIntoView();
+    } else {
+      window.scrollTo(0, 0);
+    }
   }, [pathname]);
 
   return (

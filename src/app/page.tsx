@@ -5,10 +5,9 @@ import { SectionTitle } from '@/components/ui/section-title';
 import { Card } from '@/components/ui/card';
 import { TimelineItem } from '@/components/timeline-item';
 import { Hero } from '@/components/hero';
-import { AccountingTerminal } from '@/components/accounting-terminal';
 import { SkillsMarquee } from '@/components/skills-marquee';
+import { ServiceGrid } from '@/components/service-grid';
 import {
-  services,
   experience,
   skills,
   tools,
@@ -78,29 +77,12 @@ export default function Home() {
       <Hero />
 
       <Container id="lo-que-hago" className="space-y-10">
-        <div className="services-intro">
-          <SectionTitle
-            eyebrow="Lo que hago"
-            title="Apoyo contable y operativo con orden y claridad"
-            subtitle="Combino registro contable, análisis financiero y gestión operativa para mantener la información clara y accionable."
-          />
-          <AccountingTerminal />
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {services.map((service) => (
-            <Card
-              key={service.title}
-              className="group flex flex-col gap-3"
-              interactive
-            >
-              <div className="text-[--accent] transition-colors group-hover:text-white">{iconMap[service.icon]}</div>
-              <p className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-white">
-                {service.title}
-              </p>
-              <p className="text-sm text-[--muted] transition-colors group-hover:text-white/80">{service.description}</p>
-            </Card>
-          ))}
-        </div>
+        <SectionTitle
+          eyebrow="Lo que hago"
+          title="Apoyo contable y operativo con orden y claridad"
+          subtitle="Combino registro contable, análisis financiero y automatización para convertir información dispersa en procesos claros y accionables."
+        />
+        <ServiceGrid />
       </Container>
 
       <Container id="impacto" className="space-y-8">
@@ -130,25 +112,23 @@ export default function Home() {
 
       <Container id="experiencia" className="space-y-8">
         <SectionTitle eyebrow="Experiencia" title="Trayectoria" subtitle="Roles en operación, liderazgo y soporte contable." />
-        <div className="portfolio-panel rounded-[28px] p-6 space-y-6">
-          {experience.map((exp, idx) => (
+        <ol className="home-timeline" aria-label="Trayectoria profesional">
+          {experience.map((exp) => (
             <TimelineItem
               key={exp.role + exp.company}
               title={exp.role}
               subtitle={exp.company}
               period={exp.period}
               highlight={exp.highlight}
-              first={idx === 0}
-              last={idx === experience.length - 1}
             >
               <ul className="space-y-1">
                 {exp.bullets.map((b) => (
-                  <li key={b}>• {b}</li>
+                  <li key={b}>{b}</li>
                 ))}
               </ul>
             </TimelineItem>
           ))}
-        </div>
+        </ol>
       </Container>
 
       <Container id="habilidades" className="space-y-10">
