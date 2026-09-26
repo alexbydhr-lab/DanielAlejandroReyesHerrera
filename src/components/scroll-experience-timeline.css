@@ -1,0 +1,421 @@
+.scroll-experience {
+  position: relative;
+  height: var(--experience-scroll-height);
+  scroll-margin-top: var(--header-height);
+  background: var(--surface);
+  border-block: 1px solid var(--line);
+  overflow-anchor: none;
+}
+
+/* The shared page style adds a decorative layer to #experiencia. This section
+   already has its own background, so avoid repainting that extra layer while pinned. */
+#experiencia.scroll-experience {
+  isolation: auto;
+}
+
+#experiencia.scroll-experience::before {
+  content: none;
+}
+
+.scroll-experience-sticky {
+  /* Native sticky catches the boundary immediately, before the scroll handler
+     hands the panel over to fixed positioning. Both use the same top offset. */
+  position: sticky;
+  top: var(--header-height);
+  width: 100%;
+  height: calc(100svh - var(--header-height));
+  min-height: 0;
+  contain: layout;
+  background: var(--surface);
+  padding: clamp(28px, 4vh, 44px) var(--frame-padding) clamp(24px, 4vh, 42px);
+  display: flex;
+  flex-direction: column;
+}
+
+.scroll-experience-sticky[data-pin='active'] {
+  position: fixed;
+  top: var(--header-height);
+  left: var(--timeline-left);
+  width: var(--timeline-width);
+  z-index: 10;
+}
+
+.scroll-experience-heading {
+  flex-shrink: 0;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.scroll-experience-eyebrow,
+.scroll-experience-overline {
+  margin: 0;
+  color: var(--accent);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.scroll-experience-heading h2,
+.scroll-experience-mobile-heading h2 {
+  margin: 10px 0 0;
+  color: var(--heading);
+  font-size: clamp(2.8rem, 5.2vw, 5rem);
+  line-height: 1;
+}
+
+.scroll-experience-subtitle,
+.scroll-experience-mobile-heading > p:last-child {
+  margin: 12px 0 0;
+  color: var(--muted);
+  font-size: clamp(.9rem, 1.3vw, 1.08rem);
+}
+
+.scroll-experience-counter {
+  display: flex;
+  align-items: baseline;
+  flex: none;
+  color: var(--heading);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.scroll-experience-counter strong {
+  font-size: clamp(3rem, 5.8vw, 5.6rem);
+  font-weight: 720;
+  letter-spacing: -.07em;
+}
+
+.scroll-experience-counter span {
+  margin-left: 7px;
+  color: var(--muted);
+  font-size: 1.2rem;
+}
+
+.scroll-experience-track {
+  flex-shrink: 0;
+  position: relative;
+  margin-top: clamp(30px, 5vh, 54px);
+}
+
+.scroll-experience-line {
+  position: absolute;
+  top: 40px;
+  left: var(--experience-line-inset);
+  right: var(--experience-line-inset);
+  height: 2px;
+  background: var(--line);
+  pointer-events: none;
+}
+
+.scroll-experience-line span {
+  width: 100%;
+  height: 100%;
+  display: block;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
+}
+
+.scroll-experience-track ol {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(var(--experience-count), minmax(0, 1fr));
+  list-style: none;
+}
+
+.scroll-experience-track li {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.scroll-experience-track button {
+  width: 100%;
+  min-width: 0;
+  padding: 0 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 0;
+  color: var(--muted);
+  background: transparent;
+  cursor: pointer;
+  text-align: center;
+}
+
+.scroll-experience-year {
+  height: 28px;
+  font-size: .74rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.scroll-experience-node {
+  width: 20px;
+  height: 20px;
+  display: block;
+  border: 2px solid var(--line-bright);
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: 0 0 0 5px var(--surface);
+  transition: border-color .22s ease, background-color .22s ease;
+}
+
+.scroll-experience-track button.is-active .scroll-experience-node,
+.scroll-experience-track button.is-complete .scroll-experience-node {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.scroll-experience-track button.is-active {
+  color: var(--heading);
+}
+
+.scroll-experience-company {
+  max-width: 100%;
+  margin-top: 10px;
+  font-size: clamp(.7rem, 1vw, .89rem);
+  font-weight: 650;
+  line-height: 1.3;
+}
+
+.scroll-experience-track button:hover .scroll-experience-company,
+.scroll-experience-track button:focus-visible .scroll-experience-company {
+  color: var(--accent);
+}
+
+.scroll-experience-current {
+  min-height: 0;
+  flex: 1;
+  margin-top: clamp(24px, 4vh, 42px);
+  padding-top: clamp(24px, 3vh, 34px);
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: flex-start;
+}
+
+.scroll-experience-current > div {
+  width: 100%;
+}
+
+.scroll-experience-content {
+  display: grid;
+  grid-template-columns: minmax(0, .87fr) minmax(0, 1.13fr);
+  gap: clamp(32px, 5vw, 76px);
+}
+
+.scroll-experience-role h3 {
+  max-width: 650px;
+  margin: 15px 0 0;
+  color: var(--heading);
+  font-size: clamp(2rem, 3.2vw, 3.25rem);
+  line-height: 1.08;
+}
+
+.scroll-experience-meta {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 24px;
+  color: var(--muted-strong);
+  font-size: .94rem;
+}
+
+.scroll-experience-meta span + span::before {
+  margin-right: 24px;
+  color: var(--line-bright);
+  content: '·';
+}
+
+.scroll-experience-meta .scroll-experience-current-badge {
+  padding: 2px 7px;
+  border: 1px solid var(--line-bright);
+  border-radius: 4px;
+  color: var(--accent);
+  background: var(--background);
+  font-size: .7rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.scroll-experience-meta .scroll-experience-current-badge::before {
+  content: none;
+}
+
+.scroll-experience-description {
+  max-width: 530px;
+  margin: 24px 0 0;
+  color: var(--muted-strong);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.scroll-experience-highlight {
+  max-width: 530px;
+  margin: 18px 0 0;
+  padding-left: 14px;
+  border-left: 2px solid var(--accent);
+  color: var(--heading);
+  font-size: .88rem;
+  line-height: 1.5;
+}
+
+.scroll-experience-skills ul {
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 11px;
+  list-style: none;
+}
+
+.scroll-experience-skills li {
+  position: relative;
+  padding-left: 19px;
+  color: var(--muted-strong);
+  font-size: .93rem;
+  line-height: 1.48;
+}
+
+.scroll-experience-skills li::before {
+  position: absolute;
+  left: 0;
+  top: .65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  content: '';
+}
+
+.scroll-experience-tools {
+  margin-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.scroll-experience-tools span {
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--background);
+  font-size: .73rem;
+  font-weight: 600;
+}
+
+.scroll-experience-mobile {
+  display: none;
+}
+
+@media (max-width: 900px), (max-height: 700px), (prefers-reduced-motion: reduce) {
+  .scroll-experience {
+    height: auto;
+    padding: 50px var(--frame-padding) 56px;
+  }
+
+  .scroll-experience-sticky {
+    display: none;
+  }
+
+  .scroll-experience-mobile {
+    display: block;
+  }
+
+  .scroll-experience-mobile > ol {
+    margin: 36px 0 0;
+    padding: 0 0 0 25px;
+    border-left: 1px solid var(--line-bright);
+    list-style: none;
+  }
+
+  .scroll-experience-mobile > ol > li {
+    position: relative;
+    padding: 0 0 44px 24px;
+  }
+
+  .scroll-experience-mobile > ol > li:last-child {
+    padding-bottom: 0;
+  }
+
+  .scroll-experience-mobile > ol > li::before {
+    position: absolute;
+    top: 5px;
+    left: -32px;
+    width: 13px;
+    height: 13px;
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    background: var(--background);
+    content: '';
+  }
+
+  .scroll-experience-mobile-marker {
+    display: flex;
+    align-items: baseline;
+    gap: 15px;
+    color: var(--accent);
+    font-size: .72rem;
+    letter-spacing: .1em;
+  }
+
+  .scroll-experience-mobile-marker b {
+    color: var(--heading);
+    font-size: 1.4rem;
+    letter-spacing: -.04em;
+  }
+
+  .scroll-experience-content {
+    margin-top: 12px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  .scroll-experience-role h3 {
+    font-size: clamp(1.65rem, 5vw, 2.4rem);
+  }
+
+  .scroll-experience-skills {
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 600px) {
+  .scroll-experience {
+    padding-block: 36px 42px;
+  }
+
+  .scroll-experience-mobile > ol {
+    padding-left: 13px;
+  }
+
+  .scroll-experience-mobile > ol > li {
+    padding-left: 18px;
+  }
+
+  .scroll-experience-mobile > ol > li::before {
+    left: -20px;
+  }
+
+  .scroll-experience-meta span + span::before {
+    margin-right: 12px;
+  }
+
+  .scroll-experience-meta {
+    gap: 4px 12px;
+    font-size: .82rem;
+  }
+
+  .scroll-experience-description,
+  .scroll-experience-skills li {
+    font-size: .88rem;
+  }
+}

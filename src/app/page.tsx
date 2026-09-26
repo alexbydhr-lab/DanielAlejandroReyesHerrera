@@ -3,13 +3,12 @@ import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { SectionTitle } from '@/components/ui/section-title';
 import { Card } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { TimelineItem } from '@/components/timeline-item';
+import { ScrollExperienceTimeline } from '@/components/scroll-experience-timeline';
+import '@/components/scroll-experience-timeline.css';
 import { Hero } from '@/components/hero';
+import { SkillsMarquee } from '@/components/skills-marquee';
+import { ServiceGrid } from '@/components/service-grid';
 import {
-  profile,
-  services,
-  experience,
   skills,
   tools,
   languages,
@@ -33,41 +32,18 @@ const iconMap: Record<string, ReactNode> = {
       <path d="M7 17V9M12 17V5M17 17v-7" />
     </svg>
   ),
-  box: (
+  process: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M3.5 7.5 12 3l8.5 4.5V17L12 21l-8.5-4Z" />
-      <path d="M12 3v18M3.5 7.5 12 12l8.5-4.5" />
+      <rect x="2.5" y="9" width="5" height="5" rx="1" />
+      <rect x="9.5" y="9" width="5" height="5" rx="1" />
+      <rect x="16.5" y="9" width="5" height="5" rx="1" />
+      <path d="M7.5 11.5h2M14.5 11.5h2" />
     </svg>
   ),
-  compass: (
+  automation: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M15.5 8.5 13 13l-4.5 2.5L11 11Z" />
-    </svg>
-  ),
-  briefcase: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      <path d="M4 9h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2Z" />
-      <path d="M9 12h6" />
-    </svg>
-  ),
-  user: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <circle cx="12" cy="8" r="3.5" />
-      <path d="M4 20c1.8-3.3 5-5 8-5s6.2 1.7 8 5" />
-    </svg>
-  ),
-  heart: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M12 20s-6.5-4.4-8.5-7.4A5 5 0 0 1 12 6a5 5 0 0 1 8.5 6.6C18.5 15.6 12 20 12 20Z" />
-    </svg>
-  ),
-  wallet: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M4 7h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" />
-      <path d="M4 7V6a2 2 0 0 1 2-2h10" />
-      <path d="M16 13h4" />
+      <path d="M3 5h7v5H3zM14 14h7v5h-7zM10 7.5h4a3 3 0 0 1 3 3V14" />
+      <path d="m14 11 3 3 3-3" />
     </svg>
   ),
 };
@@ -81,86 +57,41 @@ export default function Home() {
         <SectionTitle
           eyebrow="Lo que hago"
           title="Apoyo contable y operativo con orden y claridad"
-          subtitle="Combino registro contable, análisis financiero y gestión operativa para mantener la información clara y accionable."
+          subtitle="Combino registro contable, análisis financiero y automatización para convertir información dispersa en procesos claros y accionables."
         />
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          {services.map((service) => (
-            <Card
-              key={service.title}
-              className="group flex flex-col gap-3 transition-colors hover:!bg-[#0b2f70] hover:!text-white"
-              interactive
-            >
-              <div className="text-[--accent] transition-colors group-hover:text-white">{iconMap[service.icon]}</div>
-              <p className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-white">
-                {service.title}
-              </p>
-              <p className="text-sm text-[--muted] transition-colors group-hover:text-white/80">{service.description}</p>
-            </Card>
-          ))}
-        </div>
+        <ServiceGrid />
       </Container>
 
       <Container id="impacto" className="space-y-8">
         <SectionTitle
           eyebrow="Áreas de impacto"
           title="Cómo puedo ayudarte"
-          subtitle="Soporte contable, operativo y de comunicación para que la información fluya."
+          subtitle="Aplico herramientas contables, análisis de datos y mejora de procesos para convertir información dispersa en datos claros, útiles y fáciles de controlar."
         />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {impactAreas.map((area) => (
             <Card
               key={area.title}
-              className="group space-y-2 transition-colors hover:!bg-[#0b2f70] hover:!text-white"
+              className="group space-y-2"
               interactive
             >
               <div className="flex items-center gap-3 text-lg">
-                <span className="text-[--accent] transition-colors group-hover:text-white">{iconMap[area.icon]}</span>
-                <p className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-white">
+                <span className="text-[--accent] transition-colors group-hover:text-[var(--heading)]">{iconMap[area.icon]}</span>
+                <h3 className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-[var(--heading)]">
                   {area.title}
-                </p>
+                </h3>
               </div>
-              <p className="text-sm text-[--muted] transition-colors group-hover:text-white/80">{area.description}</p>
+              <p className="text-sm text-[--muted] transition-colors group-hover:text-[var(--muted-strong)]">{area.description}</p>
             </Card>
           ))}
         </div>
       </Container>
 
-      <Container id="experiencia" className="space-y-8">
-        <SectionTitle eyebrow="Experiencia" title="Trayectoria" subtitle="Roles en operación, liderazgo y soporte contable." />
-        <div className="rounded-[28px] bg-white p-6 shadow-lg border border-black/5 space-y-6">
-          {experience.map((exp, idx) => (
-            <TimelineItem
-              key={exp.role + exp.company}
-              title={exp.role}
-              subtitle={exp.company}
-              period={exp.period}
-              highlight={exp.highlight}
-              first={idx === 0}
-              last={idx === experience.length - 1}
-            >
-              <ul className="space-y-1">
-                {exp.bullets.map((b) => (
-                  <li key={b}>• {b}</li>
-                ))}
-              </ul>
-            </TimelineItem>
-          ))}
-        </div>
-      </Container>
+      <ScrollExperienceTimeline />
 
       <Container id="habilidades" className="space-y-10">
         <SectionTitle eyebrow="Habilidades" title="Fortalezas" subtitle="Habilidades blandas y técnicas." />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {skills.map((skill) => (
-            <div
-              key={skill}
-              className="group flex items-center gap-3 rounded-full border border-black/10 bg-white/90 px-4 py-2 text-sm font-semibold text-[--foreground] shadow-sm transition hover:-translate-y-0.5 hover:border-[#0b2f70]/40 hover:bg-[#0b2f70] hover:text-white"
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-[#0a5dff] transition-colors group-hover:bg-white" aria-hidden />
-              <span>{skill}</span>
-            </div>
-          ))}
-        </div>
+        <SkillsMarquee skills={skills} />
       </Container>
 
       <Container id="herramientas" className="space-y-10">
@@ -197,24 +128,23 @@ export default function Home() {
       </Container>
 
       <Container className="space-y-6">
-        <div className="rounded-[28px] bg-[#0b2f70] p-8 text-white shadow-lg">
+        <div className="portfolio-panel relative overflow-hidden rounded-[28px] p-8 text-[var(--foreground)]">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Contacto</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Contacto</p>
               <h3 className="text-2xl font-bold">{ctaFinal.title}</h3>
-              <p className="text-sm text-white/80">{ctaFinal.text}</p>
+              <p className="text-sm text-[var(--muted)]">{ctaFinal.text}</p>
             </div>
             <Button
               href={ctaFinal.href}
-              variant="secondary"
-              className="bg-white !text-[#0b2f70] hover:bg-[#0a5dff] hover:!text-white"
+              variant="primary"
             >
               {ctaFinal.button}
             </Button>
           </div>
         </div>
 
-        <div className="rounded-[24px] bg-white p-6 shadow-sm border border-black/5 space-y-4">
+        <div className="portfolio-panel rounded-[24px] p-6 space-y-4">
           <SectionTitle
             eyebrow="Formación"
             title={education.school}
@@ -229,7 +159,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="rounded-[24px] bg-white p-6 shadow-sm border border-black/5 space-y-4">
+        <div className="portfolio-panel rounded-[24px] p-6 space-y-4">
           <SectionTitle
             eyebrow="Cursos y certificaciones"
             title={certifications[0]?.school}

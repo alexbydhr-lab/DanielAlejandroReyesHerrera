@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion, useMotionValueEvent, useScroll } from 'framer-motion';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -47,12 +47,6 @@ export const StickyScroll = ({ content, className = '', contentClassName = '' }:
     setActiveCard(closest);
   });
 
-  useEffect(() => {
-    if (activeCard >= content.length) {
-      setActiveCard(0);
-    }
-  }, [activeCard, content.length]);
-
   return (
     <div
       ref={ref}
@@ -63,7 +57,7 @@ export const StickyScroll = ({ content, className = '', contentClassName = '' }:
     >
       <div className="relative z-10 flex-1">
         {content.map((item, index) => (
-          <div key={`${item.title}-${index}`} className="my-16 max-w-2xl">
+          <div key={`${item.title}-${index}`} className="my-12 max-w-2xl">
             <motion.h3
               initial={{ opacity: 0 }}
               animate={{ opacity: activeCard === index ? 1 : 0.3 }}
@@ -80,12 +74,12 @@ export const StickyScroll = ({ content, className = '', contentClassName = '' }:
             </motion.p>
           </div>
         ))}
-        <div className="h-28" />
+        <div className="h-10" />
       </div>
 
       <div
         className={clsx(
-          'hidden lg:block h-72 w-[22rem] shrink-0 overflow-hidden rounded-[22px] border border-white/10 bg-white/5 shadow-2xl sticky top-10',
+          'hidden lg:block h-72 w-[22rem] shrink-0 overflow-hidden rounded-[22px] border border-white/10 bg-white/5 shadow-2xl sticky top-32',
           contentClassName,
         )}
       >
