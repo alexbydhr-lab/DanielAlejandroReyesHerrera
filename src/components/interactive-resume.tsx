@@ -16,6 +16,7 @@ const roleTools: Record<string, string[]> = {
   Gerente: ['Excel', 'Cierres de caja', 'Capacitación', 'Control operativo'],
   'Auxiliar contable': ['CONTPAQi', 'SAT', 'CFDI', 'Nóminas'],
   Promotor: ['Venta directa', 'Comunicación', 'Cierre comercial'],
+  'Contabilidad y automatización': ['SAT', 'CFDI', 'Excel', 'Power Query', 'Python'],
 };
 
 const extractYear = (period: string) => period.match(/\d{4}/)?.[0] ?? period;

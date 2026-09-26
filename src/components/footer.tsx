@@ -9,7 +9,6 @@ export const Footer = () => {
       <div className="footer-grid">
         <div>
           <Link href="/" prefetch={false} className="portfolio-brand footer-brand">
-            <span className="brand-mark" aria-hidden="true"><i /></span>
             <span><b>DANIEL</b> <strong>REYES</strong></span>
           </Link>
           <p>Contabilidad, operación y análisis financiero con enfoque práctico.</p>

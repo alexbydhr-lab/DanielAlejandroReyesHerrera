@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { profile, heroImage } from '@/content/profile';
+import { profile, heroImage, experience } from '@/content/profile';
 
 export const Hero = () => (
   <section className="portfolio-hero">
@@ -17,9 +17,9 @@ export const Hero = () => (
         <Button href="#experiencia" variant="secondary">Ver experiencia</Button>
       </div>
       <div className="hero-metrics">
-        <div><strong>04</strong><span>roles profesionales</span></div>
+        <div><strong>{String(experience.length).padStart(2, '0')}</strong><span>roles profesionales</span></div>
         <div><strong>C1</strong><span>nivel de inglés</span></div>
-        <div><strong>7º</strong><span>semestre FECA</span></div>
+        <div><strong>9º</strong><span>semestre FECA</span></div>
       </div>
     </div>
 

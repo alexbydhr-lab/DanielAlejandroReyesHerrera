@@ -2,12 +2,12 @@ import { Container } from '@/components/ui/container';
 import { SectionTitle } from '@/components/ui/section-title';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { LocationMap } from '@/components/ui/location-map';
 import { ProjectShowcase } from '@/components/project-showcase';
 import { education, profile } from '@/content/profile';
 import { tecmiappStages } from '@/content/tecmiapp';
 import type { Metadata } from 'next';
 import { createPageMetadata, SITE_URL } from '@/lib/seo';
+import './sobre-mi.css';
 
 export const metadata: Metadata = createPageMetadata({
   title: 'Sobre mí',
@@ -33,10 +33,16 @@ const profilePageData = {
 };
 
 const paragraphs = [
-  'Soy estudiante de Contador Público en la FECA (UJED), séptimo semestre. Me he desarrollado en operación y contabilidad, liderando equipos y manteniendo procesos claros.',
-  'Disfruto organizar información, crear rutinas que faciliten el trabajo diario y comunicar hallazgos con un lenguaje simple.',
-  'Mi enfoque combina orden operativo, registro contable y análisis práctico. Creo en la mejora continua y en documentar para que los equipos trabajen con claridad.',
-  'Busco prácticas o roles junior donde pueda aportar estructura, aprender más de contabilidad y apoyar en decisiones con datos.',
+  'Comencé mi experiencia profesional en áreas operativas, donde aprendí sobre atención al cliente, organización de equipos y mejora de procesos. Con el tiempo orienté mi desarrollo hacia la contabilidad y el análisis de información.',
+  'Actualmente trabajo como auxiliar contable, participando en registros contables, análisis de CFDI y elaboración de papeles de trabajo para procesos fiscales. También utilizo Excel, Power Query y Python para analizar información y automatizar tareas.',
+  'Me interesa especialmente encontrar formas de simplificar procesos repetitivos y convertir grandes cantidades de información en datos más claros y fáciles de revisar.',
+];
+
+const professionalSummary = [
+  'Auxiliar contable',
+  '9.º semestre',
+  'Durango, Dgo.',
+  'Excel · Power Query · Python',
 ];
 
 const valores = [
@@ -102,33 +108,43 @@ const portfolioStages = [
 
 export default function SobreMiPage() {
   return (
-    <div className="space-y-16 pb-16">
+    <div className="about-page space-y-16 pb-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageData).replace(/</g, '\\u003c') }}
       />
-      <section className="relative overflow-hidden bg-transparent">
-        <Container className="relative z-10 grid gap-8 py-12 lg:grid-cols-[1.2fr,0.8fr] lg:items-start">
-          <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[--accent]">Sobre mí</p>
-            <h1 className="text-4xl font-black text-[--foreground]">Perfil y enfoque</h1>
-            <p className="max-w-3xl text-lg text-[--muted]">
-              Estudiante de Contador Público con experiencia en liderazgo operativo y registro contable. Me gusta mantener procesos ordenados y reportes claros.
+      <section className="about-intro">
+        <Container className="about-intro-layout">
+          <div className="about-intro-copy">
+            <p className="about-eyebrow">Sobre mí</p>
+            <h1>Perfil y enfoque</h1>
+            <p className="about-intro-description">
+              Estudiante de Contador Público y auxiliar contable, con experiencia en registros contables, análisis de CFDI, conciliaciones y papeles de trabajo fiscales. Me interesa mejorar procesos mediante Excel, Power Query, Python y automatización.
             </p>
           </div>
-          <div className="flex min-w-0 justify-start lg:justify-end lg:-mt-36">
-            <LocationMap location="Durango, Dgo." coordinates={`24°01'51.3"N 104°40'54.0"W`} />
-          </div>
+          <aside className="profile-ledger" aria-labelledby="profile-ledger-title">
+            <div className="profile-ledger-header">
+              <span>Ficha profesional</span>
+              <span>01 / 04</span>
+            </div>
+            <h2 id="profile-ledger-title">Actualmente</h2>
+            <ol className="profile-ledger-list">
+              {professionalSummary.map((item, index) => (
+                <li key={item}>
+                  <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
+          </aside>
         </Container>
       </section>
 
-      <Container className="space-y-10">
-        <SectionTitle title="Mi historia" subtitle="Contabilidad, operación y análisis práctico." />
-        <div className="portfolio-panel rounded-[28px] p-6 space-y-4">
+      <Container className="about-story">
+        <SectionTitle title="Mi historia" />
+        <div className="portfolio-panel about-story-copy">
           {paragraphs.map((p) => (
-            <p key={p} className="text-base text-[--muted]">
-              {p}
-            </p>
+            <p key={p}>{p}</p>
           ))}
         </div>
       </Container>

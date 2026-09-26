@@ -32,41 +32,18 @@ const iconMap: Record<string, ReactNode> = {
       <path d="M7 17V9M12 17V5M17 17v-7" />
     </svg>
   ),
-  box: (
+  process: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M3.5 7.5 12 3l8.5 4.5V17L12 21l-8.5-4Z" />
-      <path d="M12 3v18M3.5 7.5 12 12l8.5-4.5" />
+      <rect x="2.5" y="9" width="5" height="5" rx="1" />
+      <rect x="9.5" y="9" width="5" height="5" rx="1" />
+      <rect x="16.5" y="9" width="5" height="5" rx="1" />
+      <path d="M7.5 11.5h2M14.5 11.5h2" />
     </svg>
   ),
-  compass: (
+  automation: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <circle cx="12" cy="12" r="9" />
-      <path d="M15.5 8.5 13 13l-4.5 2.5L11 11Z" />
-    </svg>
-  ),
-  briefcase: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
-      <path d="M4 9h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2Z" />
-      <path d="M9 12h6" />
-    </svg>
-  ),
-  user: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <circle cx="12" cy="8" r="3.5" />
-      <path d="M4 20c1.8-3.3 5-5 8-5s6.2 1.7 8 5" />
-    </svg>
-  ),
-  heart: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M12 20s-6.5-4.4-8.5-7.4A5 5 0 0 1 12 6a5 5 0 0 1 8.5 6.6C18.5 15.6 12 20 12 20Z" />
-    </svg>
-  ),
-  wallet: (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-7 w-7">
-      <path d="M4 7h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7Z" />
-      <path d="M4 7V6a2 2 0 0 1 2-2h10" />
-      <path d="M16 13h4" />
+      <path d="M3 5h7v5H3zM14 14h7v5h-7zM10 7.5h4a3 3 0 0 1 3 3V14" />
+      <path d="m14 11 3 3 3-3" />
     </svg>
   ),
 };
@@ -89,7 +66,7 @@ export default function Home() {
         <SectionTitle
           eyebrow="Áreas de impacto"
           title="Cómo puedo ayudarte"
-          subtitle="Soporte contable, operativo y de comunicación para que la información fluya."
+          subtitle="Aplico herramientas contables, análisis de datos y mejora de procesos para convertir información dispersa en datos claros, útiles y fáciles de controlar."
         />
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           {impactAreas.map((area) => (
@@ -100,9 +77,9 @@ export default function Home() {
             >
               <div className="flex items-center gap-3 text-lg">
                 <span className="text-[--accent] transition-colors group-hover:text-[var(--heading)]">{iconMap[area.icon]}</span>
-                <p className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-[var(--heading)]">
+                <h3 className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-[var(--heading)]">
                   {area.title}
-                </p>
+                </h3>
               </div>
               <p className="text-sm text-[--muted] transition-colors group-hover:text-[var(--muted-strong)]">{area.description}</p>
             </Card>

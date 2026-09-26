@@ -10,7 +10,7 @@ export const profile = {
   availability: 'Disponibilidad de horario',
   headline: 'Contabilidad, operación y análisis financiero con enfoque práctico.',
   subheadline:
-    'Estudiante de Contador Público (FECA, UJED) con experiencia en liderazgo operativo, registro contable y mejora de procesos. Me enfoco en ordenar información, comunicar hallazgos y mantener operaciones claras.',
+    'Estudiante de noveno semestre de Contador Público (FECA, UJED) con experiencia en registro contable, análisis de CFDI y mejora de procesos. Utilizo Excel, Power Query y Python para ordenar información y automatizar tareas contables.',
   heroEyebrow: 'ESTUDIANTE DE CONTADOR PÚBLICO',
   chips: ['Durango, México', 'Excel / CONTPAQi', 'Liderazgo operativo'],
   socials: {
@@ -86,12 +86,24 @@ export const experience = [
       'Cierre y trato con distintos perfiles de clientes.',
     ],
   },
+  {
+    company: 'Papelería PSA',
+    role: 'Contabilidad y automatización',
+    period: 'Abril 2026 - Presente',
+    bullets: [
+      'Elaboro papeles de trabajo para procesos de devolución de impuestos ante el SAT.',
+      'Realizo registros contables, revisión y análisis de CFDI y documentación soporte.',
+      'Analizo y proceso información mediante Excel y Power Query para facilitar cruces, depuración y control de datos.',
+      'Desarrollo herramientas en Python para automatizar conciliaciones bancarias y simplificar procesos contables repetitivos.',
+      'Identifico oportunidades de mejora y automatización para reducir trabajo manual y hacer más eficientes los procesos.',
+    ],
+  },
 ];
 
 export const education = {
   school: 'Universidad Juárez del Estado de Durango (FECA, UJED)',
   period: '2022 - Presente',
-  detail: 'Estudiante de séptimo semestre de Contador Público.',
+  detail: 'Estudiante de noveno semestre de Contador Público.',
   values: ['Responsabilidad', 'Mejora continua', 'Trabajo colaborativo', 'Comunicación clara'],
 };
 
@@ -99,7 +111,7 @@ export const educationHistory = [
   {
     school: 'Universidad Juárez del Estado de Durango (FECA, UJED)',
     period: '2022 - Presente',
-    detail: 'Estudiante de séptimo semestre de Contador Público.',
+    detail: 'Estudiante de noveno semestre de Contador Público.',
   },
   {
     school: 'Centro de Bachillerato Tecnológico Industrial y de Servicios 89',
@@ -139,24 +151,24 @@ export const tools = [
 
 export const impactAreas: ValueArea[] = [
   {
-    title: 'Vida profesional',
-    description: 'Consigue prácticas o rol junior, ordena tus procesos y reporta con claridad.',
-    icon: 'briefcase',
+    title: 'Control contable',
+    description: 'Organización y revisión de información contable, conciliaciones bancarias, CFDI, comprobantes y seguimiento de registros para mantener datos claros y ordenados.',
+    icon: 'receipt',
   },
   {
-    title: 'Vida personal',
-    description: 'Confianza para comunicarte mejor, organizar tu tiempo y priorizar con foco.',
-    icon: 'user',
+    title: 'Análisis de información',
+    description: 'Transformación de datos financieros y operativos en reportes que faciliten la interpretación de resultados y la toma de decisiones.',
+    icon: 'chart',
   },
   {
-    title: 'Tus relaciones',
-    description: 'Mejorar comunicación con clientes, equipos y supervisores, con empatía y orden.',
-    icon: 'heart',
+    title: 'Organización de procesos',
+    description: 'Identificación de tareas repetitivas, controles innecesarios y oportunidades de mejora para hacer más eficientes los procesos administrativos y contables.',
+    icon: 'process',
   },
   {
-    title: 'Dinero y finanzas',
-    description: 'Control de gastos, registro y seguimiento de ingresos para decisiones claras.',
-    icon: 'wallet',
+    title: 'Automatización',
+    description: 'Uso de Excel, Python y herramientas digitales para reducir trabajo manual, procesar grandes cantidades de información y disminuir errores repetitivos.',
+    icon: 'automation',
   },
 ];
 
