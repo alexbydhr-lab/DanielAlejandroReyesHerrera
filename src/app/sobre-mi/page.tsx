@@ -3,7 +3,6 @@ import { SectionTitle } from '@/components/ui/section-title';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { LocationMap } from '@/components/ui/location-map';
-import { DottedSurface } from '@/components/ui/dotted-surface';
 import { ProjectShowcase } from '@/components/project-showcase';
 import { education, profile } from '@/content/profile';
 import { tecmiappStages } from '@/content/tecmiapp';
@@ -109,14 +108,6 @@ export default function SobreMiPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageData).replace(/</g, '\\u003c') }}
       />
       <section className="relative overflow-hidden bg-transparent">
-        <DottedSurface
-          className="absolute inset-0 opacity-70"
-          dotGap={24}
-          dotRadius={2.1}
-          maxOpacity={0.55}
-          interactionRadius={160}
-          strength={0.45}
-        />
         <Container className="relative z-10 grid gap-8 py-12 lg:grid-cols-[1.2fr,0.8fr] lg:items-start">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[--accent]">Sobre mí</p>
@@ -125,7 +116,7 @@ export default function SobreMiPage() {
               Estudiante de Contador Público con experiencia en liderazgo operativo y registro contable. Me gusta mantener procesos ordenados y reportes claros.
             </p>
           </div>
-          <div className="flex justify-start lg:justify-end lg:-mt-36">
+          <div className="flex min-w-0 justify-start lg:justify-end lg:-mt-36">
             <LocationMap location="Durango, Dgo." coordinates={`24°01'51.3"N 104°40'54.0"W`} />
           </div>
         </Container>

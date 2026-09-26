@@ -75,8 +75,8 @@ function ServiceDetail({ service, origin, closing, onClose, reducedMotion }: Ser
     const bounds = panel.getBoundingClientRect();
     const collapsed = `translate(${origin.x - bounds.left}px, ${origin.y - bounds.top}px) scale(${origin.width / bounds.width}, ${origin.height / bounds.height})`;
     const frames = [
-      { transform: collapsed, borderRadius: "22px" },
-      { transform: "translate(0, 0) scale(1, 1)", borderRadius: "26px" },
+      { transform: collapsed, borderRadius: "8px" },
+      { transform: "translate(0, 0) scale(1, 1)", borderRadius: "8px" },
     ];
     const panelAnimation = panel.animate(closing ? [...frames].reverse() : frames, {
       duration: closing ? 360 : 560,
@@ -84,8 +84,8 @@ function ServiceDetail({ service, origin, closing, onClose, reducedMotion }: Ser
       fill: "both",
     });
     const backdropAnimation = overlay.animate(
-      [{ backgroundColor: "rgba(0,7,15,0)", backdropFilter: "blur(0px)" },
-        { backgroundColor: "rgba(0,7,15,.76)", backdropFilter: "blur(7px)" }],
+      [{ backgroundColor: "rgba(24,34,48,0)", backdropFilter: "blur(0px)" },
+        { backgroundColor: "rgba(24,34,48,.38)", backdropFilter: "blur(3px)" }],
       { duration: closing ? 360 : 440, direction: closing ? "reverse" : "normal", fill: "both" },
     );
     const contents = panel.querySelectorAll<HTMLElement>(".service-detail-topline, .service-detail-copy > div, .service-detail-visual-wrap");

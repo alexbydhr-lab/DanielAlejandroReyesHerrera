@@ -10,7 +10,7 @@ type Props = {
 export const Card = ({ children, className = '', interactive = false }: Props) => (
   <div
     className={clsx(
-      'card p-5 sm:p-6 transition-transform duration-200',
+      'card p-5 sm:p-6',
       interactive && 'interactive-card',
       className,
     )}

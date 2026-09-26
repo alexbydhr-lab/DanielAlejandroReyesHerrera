@@ -99,12 +99,12 @@ export default function Home() {
               interactive
             >
               <div className="flex items-center gap-3 text-lg">
-                <span className="text-[--accent] transition-colors group-hover:text-white">{iconMap[area.icon]}</span>
-                <p className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-white">
+                <span className="text-[--accent] transition-colors group-hover:text-[var(--heading)]">{iconMap[area.icon]}</span>
+                <p className="text-base font-semibold text-[--foreground] transition-colors group-hover:text-[var(--heading)]">
                   {area.title}
                 </p>
               </div>
-              <p className="text-sm text-[--muted] transition-colors group-hover:text-white/80">{area.description}</p>
+              <p className="text-sm text-[--muted] transition-colors group-hover:text-[var(--muted-strong)]">{area.description}</p>
             </Card>
           ))}
         </div>
@@ -170,12 +170,12 @@ export default function Home() {
       </Container>
 
       <Container className="space-y-6">
-        <div className="portfolio-panel relative overflow-hidden rounded-[28px] p-8 text-white shadow-lg">
+        <div className="portfolio-panel relative overflow-hidden rounded-[28px] p-8 text-[var(--foreground)]">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/80">Contacto</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">Contacto</p>
               <h3 className="text-2xl font-bold">{ctaFinal.title}</h3>
-              <p className="text-sm text-white/80">{ctaFinal.text}</p>
+              <p className="text-sm text-[var(--muted)]">{ctaFinal.text}</p>
             </div>
             <Button
               href={ctaFinal.href}
