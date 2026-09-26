@@ -431,7 +431,11 @@ main,.portfolio-footer { position:relative;z-index:1; }
   padding:0;
   border-bottom:1px solid var(--line);
   background:var(--surface);
-  transition:none;
+  transition:transform .44s cubic-bezier(.22,1,.36,1);
+}
+html.service-detail-open .site-frame .portfolio-header {
+  transform:translateY(calc(-100% - 1px));
+  pointer-events:none;
 }
 .site-frame .portfolio-nav-shell {
   width:100%;

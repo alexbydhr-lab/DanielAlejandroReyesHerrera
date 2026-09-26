@@ -232,39 +232,29 @@ export function ServiceGrid() {
     return () => observer.disconnect();
   }, [reducedMotion]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!selected) return;
     const root = document.documentElement;
     const body = document.body;
     const scrollY = window.scrollY;
     const previousRootOverflow = root.style.overflow;
     const previousRootOverscroll = root.style.overscrollBehavior;
-    const previousOverflow = body.style.overflow;
     const previousOverscroll = body.style.overscrollBehavior;
     const previousPaddingRight = body.style.paddingRight;
-    const previousPosition = body.style.position;
-    const previousTop = body.style.top;
-    const previousWidth = body.style.width;
     const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
+    root.classList.add("service-detail-open");
     root.style.overflow = "hidden";
     root.style.overscrollBehavior = "none";
-    body.style.overflow = "hidden";
     body.style.overscrollBehavior = "none";
-    body.style.position = "fixed";
-    body.style.top = `-${scrollY}px`;
-    body.style.width = "100%";
     if (scrollbarWidth > 0) body.style.paddingRight = `${scrollbarWidth}px`;
 
     return () => {
+      root.classList.remove("service-detail-open");
       root.style.overflow = previousRootOverflow;
       root.style.overscrollBehavior = previousRootOverscroll;
-      body.style.overflow = previousOverflow;
       body.style.overscrollBehavior = previousOverscroll;
       body.style.paddingRight = previousPaddingRight;
-      body.style.position = previousPosition;
-      body.style.top = previousTop;
-      body.style.width = previousWidth;
       window.scrollTo({ top: scrollY, left: 0, behavior: "instant" });
     };
   }, [selected]);
