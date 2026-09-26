@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion, useScroll, useSpring, useTransform } from 'framer-motion';
 import { type CSSProperties, useRef, useState } from 'react';
+import { experienceTools } from '@/content/experience-tools';
 
 type ExperienceItem = {
   company: string;
@@ -9,14 +10,6 @@ type ExperienceItem = {
   period: string;
   bullets: string[];
   highlight?: string;
-};
-
-const roleTools: Record<string, string[]> = {
-  'Mesero y preparación de bebidas': ['Caja', 'Inventarios', 'Servicio al cliente'],
-  Gerente: ['Excel', 'Cierres de caja', 'Capacitación', 'Control operativo'],
-  'Auxiliar contable': ['CONTPAQi', 'SAT', 'CFDI', 'Nóminas'],
-  Promotor: ['Venta directa', 'Comunicación', 'Cierre comercial'],
-  'Contabilidad y automatización': ['SAT', 'CFDI', 'Excel', 'Power Query', 'Python'],
 };
 
 const extractYear = (period: string) => period.match(/\d{4}/)?.[0] ?? period;
@@ -100,7 +93,7 @@ export const InteractiveResume = ({ experiences }: { experiences: ExperienceItem
                             </div>
                             <div className="journey-toolkit">
                               <span>HERRAMIENTAS / CAPACIDADES</span>
-                              <div>{(roleTools[experience.role] ?? []).map((tool) => <b key={tool}>{tool}</b>)}</div>
+                              <div>{(experienceTools[experience.role] ?? []).map((tool) => <b key={tool}>{tool}</b>)}</div>
                             </div>
                           </motion.div>
                         )}

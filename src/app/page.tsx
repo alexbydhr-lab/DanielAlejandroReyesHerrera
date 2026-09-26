@@ -3,12 +3,12 @@ import { Container } from '@/components/ui/container';
 import { Button } from '@/components/ui/button';
 import { SectionTitle } from '@/components/ui/section-title';
 import { Card } from '@/components/ui/card';
-import { TimelineItem } from '@/components/timeline-item';
+import { ScrollExperienceTimeline } from '@/components/scroll-experience-timeline';
+import '@/components/scroll-experience-timeline.css';
 import { Hero } from '@/components/hero';
 import { SkillsMarquee } from '@/components/skills-marquee';
 import { ServiceGrid } from '@/components/service-grid';
 import {
-  experience,
   skills,
   tools,
   languages,
@@ -87,26 +87,7 @@ export default function Home() {
         </div>
       </Container>
 
-      <Container id="experiencia" className="space-y-8">
-        <SectionTitle eyebrow="Experiencia" title="Trayectoria" subtitle="Roles en operación, liderazgo y soporte contable." />
-        <ol className="home-timeline" aria-label="Trayectoria profesional">
-          {experience.map((exp) => (
-            <TimelineItem
-              key={exp.role + exp.company}
-              title={exp.role}
-              subtitle={exp.company}
-              period={exp.period}
-              highlight={exp.highlight}
-            >
-              <ul className="space-y-1">
-                {exp.bullets.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
-            </TimelineItem>
-          ))}
-        </ol>
-      </Container>
+      <ScrollExperienceTimeline />
 
       <Container id="habilidades" className="space-y-10">
         <SectionTitle eyebrow="Habilidades" title="Fortalezas" subtitle="Habilidades blandas y técnicas." />
